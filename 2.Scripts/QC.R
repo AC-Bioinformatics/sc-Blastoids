@@ -1,6 +1,7 @@
 # QC filtering of the post-CellBender merged Seurat object (24h, 48h and 72h blastoids)
 #
-# Input:  3.Results/2.CellBender/merged_filtered_seurat.rds (from h5_to_seurat.R)
+# Input:  3.Results/2.CellBender/merged_filtered_seurat.rds (from h5_to_seurat.R), or, when that does not exist,
+#         1.Data/merged_filtered_seurat.rds (the shared object, to start here without running CellBender)
 # Steps:  1. Remove the "_cellbender" suffix from sample names, cell barcodes and layers (one counts layer per sample, counts.<Sample>)
 #         2. Compute QC metrics per sample
 #         3. Per-sample filtering: hard bounds + MAD-based bounds
@@ -37,6 +38,7 @@ if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
 source(file.path(Root, "2.Scripts", "functions.R"))
 
 Input_rds <- file.path(Results, "2.CellBender", "merged_filtered_seurat.rds")
+if (!file.exists(Input_rds)) Input_rds <- file.path(Root, "1.Data", "merged_filtered_seurat.rds")
 Out_dir <- file.path(Results, "3.QC_filtering")
 dir.create(file.path(Out_dir, "per_sample"), recursive = TRUE, showWarnings = FALSE)
 
