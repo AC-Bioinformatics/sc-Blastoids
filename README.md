@@ -26,19 +26,11 @@ The analysis goes from the raw 10X matrices to cell types and trajectories:
 
 - R ≥ 4.4 with a C/C++ compiler, and the HDF5 library (e.g. `brew install hdf5`, `apt install libhdf5-dev`)
 - For the full dataset (~105,000 cells), about 64 GB of RAM; see [Runtime and memory](#runtime-and-memory)
-- Only to start from the raw data: CellBender 0.4.0, installed with pip or run in its container
-  (see `2.Scripts/cellbender.sh` and `2.Scripts/cellbender_container.sh`); a GPU is strongly recommended
+- Only to start from the raw data: CellBender (see step 3 below); a GPU is strongly recommended
 
 ## How to run
 
-1. **Clone the repository**
-
-   ```
-   git clone https://github.com/AC-Bioinformatics/sc-Blastoids.git
-   cd sc-Blastoids
-   ```
-
-2. **Get the data.** The data are shared on request. Put the shared files in `1.Data/`, check and unzip them:
+1. **Get the data.** The data are shared on request. Put the shared files in `1.Data/`, check and unzip them:
 
    ```
    cd 1.Data
@@ -49,11 +41,21 @@ The analysis goes from the raw 10X matrices to cell types and trajectories:
 
    `1.Data/README.md` lists the files and the layout the scripts expect.
 
-3. **Install the R packages** (only those not installed yet):
+2. **Install the R packages** (only those not installed yet):
 
    ```
    Rscript 2.Scripts/install_packages.R
    ```
+
+3. **Install CellBender** (only to start from the raw data); recommended in a conda environment:
+
+   ```
+   conda create -n cellbender python=3.12
+   conda activate cellbender
+   pip install cellbender
+   ```
+
+   Alternatively, run it in its container with `2.Scripts/cellbender_container.sh` (Apptainer or Docker).
 
 4. **Run the pipeline**, either
 
@@ -66,7 +68,7 @@ The analysis goes from the raw 10X matrices to cell types and trajectories:
    - or from the raw 10X matrices, including CellBender:
 
      ```
-     bash 2.Scripts/run_pipeline.sh                          # CellBender installed with pip
+     bash 2.Scripts/run_pipeline.sh                          # with the cellbender conda environment active
      CELLBENDER=apptainer bash 2.Scripts/run_pipeline.sh     # or in the container (apptainer or docker)
      ```
 
