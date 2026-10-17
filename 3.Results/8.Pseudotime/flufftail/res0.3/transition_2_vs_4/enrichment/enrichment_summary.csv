@@ -1,0 +1,7 @@
+"gene_set","background","n_genes","significant_KEGG","significant_GOBP","top_term"
+"all","tested_genes",199,1,92,"cell cycle process"
+"all","default",199,2,172,"cell cycle process"
+"higher_in_cluster2","tested_genes",101,1,116,"cell cycle process"
+"higher_in_cluster2","default",101,4,172,"cell cycle process"
+"higher_in_cluster4","tested_genes",28,10,23,"Oxidative phosphorylation"
+"higher_in_cluster4","default",28,12,44,"oxidative phosphorylation"
