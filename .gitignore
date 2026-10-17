@@ -1,0 +1,28 @@
+# 1.Data: only the README is tracked (raw 10X matrices are downloaded here)
+1.Data/*
+!1.Data/README.md
+
+# Large data objects (GitHub rejects files over 100 MB)
+*.h5
+*.h5ad
+*.rds
+*.mtx
+*.mtx.gz
+*.tsv.gz
+*.loom
+*.tar.gz
+
+# CellBender training checkpoints
+3.Results/2.CellBender/ckpt/
+
+# R / editor / OS noise
+Rplots.pdf
+.Rhistory
+.RData
+.Rproj.user/
+.DS_Store
+__pycache__/
+
+# Container images (pulled locally, see 2.Scripts/cellbender_container.sh)
+*.sif
+containers/
