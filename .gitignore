@@ -32,3 +32,6 @@ containers/
 
 # Saved Louvain clusters (reused by Clustering.R)
 !3.Results/6.Clustering/Louvain/cluster_metadata.rds
+
+# Separate test runs (SC_RESULTS=test), kept on the server only
+test/
