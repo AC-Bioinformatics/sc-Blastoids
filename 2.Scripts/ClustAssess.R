@@ -11,7 +11,7 @@
 #   - algorithms: Louvain (1, what Clustering.R used), Louvain refined (2) and SLM (3)
 #   - output: 3.Results/6.Clustering/ClustAssess/
 #       clustering_stability.rds, Clustering_stability.pdf
-# Usage:  Rscript 2.Scripts/ClustAssess.R          (full run, from the repository root)
+# Usage:  Rscript 2.Scripts/ClustAssess.R          (full run, from any directory)
 #         Rscript 2.Scripts/ClustAssess.R test     (quick check on 3,000 cells)
 #         N_CORES sets the number of parallel workers (default 1)
 
@@ -19,8 +19,14 @@ args <- commandArgs(trailingOnly = TRUE)
 test <- "test" %in% args
 
 # Path configuration
-Root <- getwd()
-if (!file.exists(file.path(Root, "2.Scripts", "functions.R"))) stop("Run this script from the repository root")
+# Repository root: the folder above 2.Scripts (from the script's own path with Rscript or source(),
+# otherwise the working directory)
+Root <- local({
+  f <- gsub("~+~", " ", sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)), fixed = TRUE)
+  if (length(f) == 0) f <- tryCatch(sys.frame(1)$ofile, error = function(e) NULL)
+  if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
+})
+if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 input_rds  <- file.path(Root, "3.Results", "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
 singler_md <- file.path(Root, "3.Results", "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
 Out_dir    <- file.path(Root, "3.Results", "6.Clustering", "ClustAssess", if (test) "test" else "")

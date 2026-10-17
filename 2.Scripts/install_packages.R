@@ -3,7 +3,7 @@
 # Sources: CRAN, Bioconductor and GitHub (monocle3, SeuratWrappers, Flufftail)
 # Requires: R >= 4.4, a C/C++ compiler (Rtools on Windows, Xcode command line tools on macOS) and the
 #           HDF5 library for hdf5r (e.g. brew install hdf5, or apt install libhdf5-dev)
-# Usage:    Rscript 2.Scripts/install_packages.R   (from the repository root)
+# Usage:    Rscript 2.Scripts/install_packages.R   (from any directory)
 #
 # Versions the results in 3.Results were made with (R 4.4.2) are listed in `versions_used` and
 # printed next to the installed versions at the end.

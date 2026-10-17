@@ -9,7 +9,7 @@
 #           seurat_multi_res_clustered.rds (RNA_snn_res.<resolution> columns)
 #           umap_resolution_<resolution>.pdf, umap_all_resolutions_combined.pdf, resolution_vs_clusters.pdf,
 #           clustree_stability.pdf, cluster_summary.csv, clustering_summary.txt
-# Usage: Rscript 2.Scripts/Clustering.R   (from the repository root)
+# Usage: Rscript 2.Scripts/Clustering.R   (from any directory)
 # ============================================================================
 
 # Load required libraries
@@ -24,8 +24,14 @@ suppressPackageStartupMessages({
 # Configuration
 # ============================================================================
 
-Root <- getwd()
-if (!file.exists(file.path(Root, "2.Scripts", "functions.R"))) stop("Run this script from the repository root")
+# Repository root: the folder above 2.Scripts (from the script's own path with Rscript or source(),
+# otherwise the working directory)
+Root <- local({
+  f <- gsub("~+~", " ", sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)), fixed = TRUE)
+  if (length(f) == 0) f <- tryCatch(sys.frame(1)$ofile, error = function(e) NULL)
+  if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
+})
+if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 
 # Input file path
 input_file <- file.path(Root, "3.Results", "5.Normalisation", "merged_normalised_seurat.rds")

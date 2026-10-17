@@ -12,7 +12,7 @@
 #           Thresholding_combined.txt, qc_filtering_summary_mqc.yaml
 #           per_sample/<Sample>/<Sample>_{QC_histograms.pdf, thresholds.txt, cells_to_keep.rds, stats.rds}
 #
-# Usage:  Rscript 2.Scripts/QC.R   (from the repository root)
+# Usage:  Rscript 2.Scripts/QC.R   (from any directory)
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -22,8 +22,14 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
-Root <- getwd()
-if (!file.exists(file.path(Root, "2.Scripts", "functions.R"))) stop("Run this script from the repository root")
+# Repository root: the folder above 2.Scripts (from the script's own path with Rscript or source(),
+# otherwise the working directory)
+Root <- local({
+  f <- gsub("~+~", " ", sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)), fixed = TRUE)
+  if (length(f) == 0) f <- tryCatch(sys.frame(1)$ofile, error = function(e) NULL)
+  if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
+})
+if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 source(file.path(Root, "2.Scripts", "functions.R"))
 
 Input_rds <- file.path(Root, "3.Results", "2.CellBender", "merged_filtered_seurat.rds")

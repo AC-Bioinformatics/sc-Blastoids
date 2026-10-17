@@ -2,11 +2,17 @@
 # Inputs -- 3.Results/2.CellBender/<Sample>_cellbender_filtered.h5 for each sample (from cellbender.sh). 
 # Outputs -- 3.Results/2.CellBender/merged_filtered_seurat.rds, merged seurat v5 object with each sample as a different assay / layer,
 #            plus seurat_processing_log.txt and seurat_layer_stats.txt. 
-# Usage -- Rscript 2.Scripts/h5_to_seurat.R (from the repository root)
+# Usage -- Rscript 2.Scripts/h5_to_seurat.R (from any directory)
 
 # 1. SET PATHS RELATIVE TO THE REPOSITORY ROOT
-Root <- getwd()
-if (!file.exists(file.path(Root, "2.Scripts", "h5_to_seurat.R"))) stop("Run this script from the repository root")
+# Repository root: the folder above 2.Scripts (from the script's own path with Rscript or source(),
+# otherwise the working directory)
+Root <- local({
+  f <- gsub("~+~", " ", sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)), fixed = TRUE)
+  if (length(f) == 0) f <- tryCatch(sys.frame(1)$ofile, error = function(e) NULL)
+  if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
+})
+if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 
 out_dir <- file.path(Root, "3.Results", "2.CellBender")
 if (!dir.exists(out_dir)) {

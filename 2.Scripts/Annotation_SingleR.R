@@ -25,7 +25,7 @@
 ###
 ### Input: 3.Results/6.Clustering/Louvain/seurat_multi_res_clustered.rds
 ###
-### Usage: Rscript 2.Scripts/Annotation_SingleR.R [--test]   (from the repository root)
+### Usage: Rscript 2.Scripts/Annotation_SingleR.R [--test]   (from any directory)
 ###   --test  5,000 random cells and two resolutions, written to <out_dir>/test
 ###
 ### Outputs (3.Results/7.Annotation/singler_zhao2024/):
@@ -54,8 +54,14 @@ library(patchwork)
 # ============================================================
 # 1. Path configuration
 # ============================================================
-Root <- getwd()
-if (!file.exists(file.path(Root, "2.Scripts", "functions.R"))) stop("Run this script from the repository root")
+# Repository root: the folder above 2.Scripts (from the script's own path with Rscript or source(),
+# otherwise the working directory)
+Root <- local({
+  f <- gsub("~+~", " ", sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)), fixed = TRUE)
+  if (length(f) == 0) f <- tryCatch(sys.frame(1)$ofile, error = function(e) NULL)
+  if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
+})
+if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 
 input_rds <- file.path(Root, "3.Results", "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
 ref_rds   <- file.path(Root, "1.Data", "references", "zhao2024_human_embryo", "psd.R3.6.em.seurat.ob.rds")

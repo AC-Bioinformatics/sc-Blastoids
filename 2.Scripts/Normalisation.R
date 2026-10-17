@@ -14,7 +14,7 @@
 #           variable_features.txt, variable_features_by_sample.csv, variance_explained_per_PC.txt,
 #           Normalisation_log.txt, normalisation_mqc.yaml
 #
-# Usage:  Rscript 2.Scripts/Normalisation.R   (from the repository root)
+# Usage:  Rscript 2.Scripts/Normalisation.R   (from any directory)
 
 suppressPackageStartupMessages({
   library(Seurat)
@@ -22,8 +22,14 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
-Root <- getwd()
-if (!file.exists(file.path(Root, "2.Scripts", "functions.R"))) stop("Run this script from the repository root")
+# Repository root: the folder above 2.Scripts (from the script's own path with Rscript or source(),
+# otherwise the working directory)
+Root <- local({
+  f <- gsub("~+~", " ", sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value = TRUE)), fixed = TRUE)
+  if (length(f) == 0) f <- tryCatch(sys.frame(1)$ofile, error = function(e) NULL)
+  if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
+})
+if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 source(file.path(Root, "2.Scripts", "functions.R"))
 
 Input_rds <- file.path(Root, "3.Results", "3.QC_filtering", "merged_postfilt_seurat.rds")
