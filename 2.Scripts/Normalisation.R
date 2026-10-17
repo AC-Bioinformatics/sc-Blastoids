@@ -1,10 +1,10 @@
 # Log normalisation, PCA and UMAP of the QC-filtered object (24h, 48h and 72h blastoids)
 #
 # Input:  3.Results/3.QC_filtering/merged_postfilt_seurat.rds (RNA counts split into one layer per sample)
-# Steps:  1. LogNormalize per sample layer (scale factor 10,000)
-#         2. 3,000 variable features (vst) per sample layer, combined into 3,000 consensus features
-#         3. ScaleData on the consensus features (no regression)
-#         4. PCA with 50 PCs; UMAP on PCs 1-20 (cosine)
+# Steps:  1. Per sample: LogNormalize (scale factor 10,000), 3,000 variable features (vst), ScaleData (no regression)
+#         2. Merge the normalised samples (one data layer per sample), 3,000 consensus variable features (vst)
+#            across the sample data layers, ScaleData on the consensus features
+#         3. PCA with 50 PCs; UMAP on PCs 1-20 (cosine)
 #         5. Elbow plot, variance explained per PC (split into between- and within-sample), PCA and UMAP coloured by sample,
 #            PCA with each sample highlighted in turn and UMAP of each sample on its own
 # Output: 3.Results/5.Normalisation/
@@ -43,26 +43,35 @@ t0 <- Sys.time()
 # Load ----
 log_msg("Reading ", Input_rds)
 merged_df <- readRDS(Input_rds)
-count_layers <- Layers(merged_df[["RNA"]], search = "counts")
-if (length(count_layers) == 1) {
-  merged_df[["RNA"]] <- split(merged_df[["RNA"]], f = merged_df$Sample)
-  count_layers <- Layers(merged_df[["RNA"]], search = "counts")
-}
-log_msg("Cells: ", ncol(merged_df), ", genes: ", nrow(merged_df), ", count layers: ", paste(count_layers, collapse = ", "))
+samples <- sort(unique(merged_df$Sample))
+log_msg("Cells: ", ncol(merged_df), ", genes: ", nrow(merged_df), ", samples: ", paste(samples, collapse = ", "))
 
 
-# Normalisation and variable features ----
-log_msg("LogNormalize per sample layer")
-merged_df <- NormalizeData(merged_df, normalization.method = "LogNormalize", scale.factor = norm_scale_factor, verbose = FALSE)
+# Normalisation per sample ----
+sample_objs <- lapply(samples, function(s) {
+  log_msg("Normalising ", s)
+  obj <- subset(merged_df, subset = Sample == s)
+  obj <- NormalizeData(obj, normalization.method = "LogNormalize", scale.factor = norm_scale_factor, verbose = FALSE)
+  obj <- FindVariableFeatures(obj, selection.method = "vst", nfeatures = norm_nfeatures, verbose = FALSE)
+  ScaleData(obj, features = VariableFeatures(obj), verbose = FALSE)
+})
+rm(merged_df); invisible(gc())
 
-log_msg("Variable features per sample layer and consensus")
-merged_df <- FindVariableFeatures(merged_df, selection.method = "vst", nfeatures = norm_nfeatures, verbose = FALSE)
+
+# Merge and consensus variable features ----
+log_msg("Merging the normalised samples")
+merged_df <- merge(sample_objs[[1]], y = sample_objs[-1], merge.data = TRUE)
+rm(sample_objs); invisible(gc())
+
+data_layers <- grep("^data\\.", Layers(merged_df[["RNA"]]), value = TRUE)
+log_msg("Consensus variable features across ", length(data_layers), " data layers")
+merged_df <- FindVariableFeatures(merged_df, layer = data_layers, selection.method = "vst", nfeatures = norm_nfeatures,
+                                  verbose = FALSE)
 var_features <- VariableFeatures(merged_df)
 writeLines(var_features, file.path(Out_dir, "variable_features.txt"))
 
-data_layers <- Layers(merged_df[["RNA"]], search = "data")
 layer_features <- lapply(data_layers, function(l) head(VariableFeatures(merged_df, layer = l), norm_nfeatures))
-names(layer_features) <- sub("^data\\.", "", data_layers)
+names(layer_features) <- samples
 max_len <- max(lengths(layer_features))
 write.csv(as.data.frame(lapply(layer_features, function(x) c(x, rep(NA, max_len - length(x)))), check.names = FALSE),
           file.path(Out_dir, "variable_features_by_sample.csv"), row.names = FALSE)
@@ -178,8 +187,8 @@ cat("Normalisation Settings & Stats\n")
 cat("Generated on:", as.character(Sys.time()), "\n")
 cat("==================================================\n")
 cat("Input:", Input_rds, "\n")
-cat("Method: LogNormalize, scale factor", norm_scale_factor, "\n")
-cat("Variable features: vst,", norm_nfeatures, "per sample layer, consensus of", length(data_layers), "layers\n")
+cat("Method: LogNormalize per sample, scale factor", norm_scale_factor, "\n")
+cat("Variable features: vst,", norm_nfeatures, "per sample, consensus of", length(data_layers), "sample data layers\n")
 cat("Variables regressed: none\n")
 cat("npcs (PCA):", norm_npcs, "\n")
 cat("UMAP: PCs 1-", umap_dims, ", cosine\n", sep = "")
