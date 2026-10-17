@@ -30,10 +30,14 @@ Root <- local({
   if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
 })
 if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
+
+# Results folder: 3.Results, or the folder given in SC_RESULTS (relative to the repository root unless absolute)
+Results <- Sys.getenv("SC_RESULTS", "3.Results")
+if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
 source(file.path(Root, "2.Scripts", "functions.R"))
 
-Input_rds <- file.path(Root, "3.Results", "3.QC_filtering", "merged_postfilt_seurat.rds")
-Out_dir <- file.path(Root, "3.Results", "5.Normalisation")
+Input_rds <- file.path(Results, "3.QC_filtering", "merged_postfilt_seurat.rds")
+Out_dir <- file.path(Results, "5.Normalisation")
 dir.create(Out_dir, recursive = TRUE, showWarnings = FALSE)
 
 # Parameters

@@ -29,3 +29,6 @@ containers/
 
 # Run logs (written by 2.Scripts/run_pipeline.sh)
 3.Results/logs/
+
+# Saved Louvain clusters (reused by Clustering.R)
+!3.Results/6.Clustering/Louvain/cluster_metadata.rds

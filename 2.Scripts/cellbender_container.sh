@@ -59,7 +59,7 @@ else
     echo "Engine: Docker (${Image})"
     # Runs as the host user so outputs are not owned by root; HOME must be writable for caches
     docker run --rm --platform linux/amd64 $Gpu_flag \
-        -u "$(id -u):$(id -g)" -e HOME=/tmp \
+        -u "$(id -u):$(id -g)" -e HOME=/tmp -e SC_RESULTS \
         -v "${Root}:${Root}" -w "$Root" \
         "$Image" bash "$Script" "$@"
 fi

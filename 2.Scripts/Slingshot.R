@@ -80,10 +80,14 @@ Root <- local({
 })
 if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 
-input_rds  <- file.path(Root, "3.Results", "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
-singler_md <- file.path(Root, "3.Results", "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
+# Results folder: 3.Results, or the folder given in SC_RESULTS (relative to the repository root unless absolute)
+Results <- Sys.getenv("SC_RESULTS", "3.Results")
+if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
+
+input_rds  <- file.path(Results, "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
+singler_md <- file.path(Results, "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
 zhao_top25 <- file.path(Root, "1.Data", "references", "zhao2024_human_embryo", "zhao2024_celltype_markers_top25.csv")
-out_dir    <- file.path(Root, "3.Results", "8.Pseudotime", "slingshot")
+out_dir    <- file.path(Results, "8.Pseudotime", "slingshot")
 
 # ============================================================
 # 2. Parameters

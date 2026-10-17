@@ -6,11 +6,15 @@
 #         2. Pseudotime from naive epiblast to CTB/STB (primitive endoderm removed)
 #         3. DE genes at the transition between the two 24h epiblast clusters 2 and 4 (Louvain_0.3_11),
 #            core markers, cell-cycle phase per state and KEGG / GO:BP enrichment (g:Profiler)
+#         4. KEGG / GO:BP enrichment of the transition DE genes: all and each direction, against the tested
+#            genes and against the g:Profiler default background
 # Output: 3.Results/8.Pseudotime/flufftail/res0.3/
 #           fuzzy_clust_res0.3.rds, membership_degrees_<config>.csv, ecc_boxplots.pdf, umap_ecc.pdf,
 #           umap_hard_clusters.pdf, consensus_heatmap.pdf, umap_entropy_membership.pdf
 #           cds_pseudotime_end_CTB_STB.rds, umap_pseudotime_end_CTB_STB.pdf, pseudotime_decomposed_end_CTB_STB.pdf
 #           transition_2_vs_4/ (transition cells, DE genes, heatmap, core markers, cell-cycle phase, enrichment)
+#           transition_2_vs_4/enrichment/ (enrichment_<set>_bg_<background>.csv and plots, enrichment_summary.csv,
+#             top_terms_all_bg_tested_genes_unfiltered.csv)
 #
 # Usage:  Rscript 2.Scripts/Flufftail.R   (from any directory)
 
@@ -33,9 +37,13 @@ Root <- local({
   if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
 })
 if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
-input_rds  <- file.path(Root, "3.Results", "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
-singler_md <- file.path(Root, "3.Results", "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
-Out_dir    <- file.path(Root, "3.Results", "8.Pseudotime", "flufftail", "res0.3")
+
+# Results folder: 3.Results, or the folder given in SC_RESULTS (relative to the repository root unless absolute)
+Results <- Sys.getenv("SC_RESULTS", "3.Results")
+if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
+input_rds  <- file.path(Results, "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
+singler_md <- file.path(Results, "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
+Out_dir    <- file.path(Results, "8.Pseudotime", "flufftail", "res0.3")
 dir.create(Out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Loading data
@@ -203,17 +211,23 @@ seurat_object[["RNA"]] <- JoinLayers(seurat_object[["RNA"]])
 seurat_object[["RNA"]] <- as(seurat_object[["RNA"]], "Assay")
 
 # Transition cells. The midpoint between the two centroids is moved to the median position of the
-# border cells (membership >= 0.1 in both clusters), where entropy is highest.
+# border cells (membership >= 0.1 in both clusters) that lie between the two cluster cores, where entropy
+# is highest: those within half the distance between the cores from the midpoint (border cells elsewhere,
+# e.g. in small patches of the two clusters away from the gap, are not used).
 umap_df <- as.data.frame(umap)
 colnames(umap_df) <- c("UMAP_1", "UMAP_2")
 umap_df$hard_clusters <- hard_clusters
 
-border <- colnames(seurat_object)[degree_matrix[, as.character(clusters[1])] >= 0.1 & degree_matrix[, as.character(clusters[2])] >= 0.1]
-border_median <- apply(umap[border, ], 2, median)
-cat("Border cells:", length(border), "| median UMAP:", round(border_median, 2), "\n")
-
 first_pass <- get_transition_cells(umap_df, clusters_of_interest = clusters, percentage_points_centroid = 0.4, num_points_transition = 1000)
 midpoint <- unlist(first_pass$centroid_results$midpoint_centroid[1, 1:2])
+
+border <- colnames(seurat_object)[degree_matrix[, as.character(clusters[1])] >= 0.1 & degree_matrix[, as.character(clusters[2])] >= 0.1]
+core_centres <- sapply(clusters, function(k) apply(umap[first_pass$centroids_cells[[k]], , drop = FALSE], 2, median))
+radius <- sqrt(sum((core_centres[, 1] - core_centres[, 2])^2)) / 2
+border_between <- border[sqrt(colSums((t(umap[border, , drop = FALSE]) - midpoint)^2)) <= radius]
+border_median <- apply(umap[border_between, , drop = FALSE], 2, median)
+cat("Border cells:", length(border), "| between the cores (within", round(radius, 2), "of the midpoint):", length(border_between),
+    "| median UMAP:", round(border_median, 2), "\n")
 translation <- as.numeric(border_median - midpoint)
 cat("Midpoint:", round(midpoint, 2), "| translation:", round(translation, 2), "\n")
 
@@ -357,4 +371,79 @@ if (is.null(results)) {
       guides(color = "none")
     ggsave(file.path(Tr_dir, paste0(gsub(":", "", src), "_DE_genes_transition_", pair, ".pdf")), p_enrich, width = 10, height = 7)
   }
+}
+
+
+# 4. Enrichment of the transition DE genes ----
+# KEGG and GO:BP enrichment (g:Profiler) of the transition DE genes: all DE genes and each direction separately,
+# against the tested genes (the variable features in the trajectory) and against the default background
+En_dir <- file.path(Tr_dir, "enrichment")
+dir.create(En_dir, showWarnings = FALSE, recursive = TRUE)
+
+tested_genes <- rownames(cds)
+cat("DE genes:", nrow(de_genes), "| tested genes:", length(tested_genes), "\n")
+print(table(de_genes$higher_in, useNA = "ifany"))
+
+gene_sets <- list(
+  all = de_genes$gene_short_name,
+  higher_in_A = de_genes$gene_short_name[de_genes$higher_in %in% paste("Cluster", clusters[1])],
+  higher_in_B = de_genes$gene_short_name[de_genes$higher_in %in% paste("Cluster", clusters[2])]
+)
+names(gene_sets) <- c("all", paste0("higher_in_cluster", clusters))
+backgrounds <- list(tested_genes = tested_genes, default = NULL)
+
+plot_terms <- function(src_results, src, title) {
+  top5 <- src_results %>% dplyr::slice(1:5)
+  ggplot(src_results, aes(x = reorder(term_name, -log10(p_value)), y = -log10(p_value), size = intersection_size)) +
+    geom_point(color = "grey70", alpha = 0.6) +
+    geom_point(data = top5, aes(color = term_name), size = 4) +
+    geom_text_repel(data = top5, aes(label = term_name), size = 5, max.overlaps = Inf,
+                    box.padding = 0.6, segment.color = "grey60") +
+    theme_classic() +
+    theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+          axis.text = element_text(size = 14), axis.title = element_text(size = 16)) +
+    expand_limits(y = max(-log10(src_results$p_value)) + 1, x = c(0.5, nrow(src_results) + 5)) +
+    labs(x = paste(src, "terms"), y = "-log10(p-adj)", title = title) +
+    guides(color = "none")
+}
+
+summary_rows <- list()
+for (set in names(gene_sets)) {
+  for (bg in names(backgrounds)) {
+    tag <- paste0(set, "_bg_", bg)
+    query <- gene_sets[[set]]
+    res <- gost(query = query, sources = c("KEGG", "GO:BP"), organism = "hsapiens",
+                custom_bg = backgrounds[[bg]], as_short_link = FALSE, evcodes = TRUE)
+    n_sig <- if (is.null(res)) 0 else nrow(res$result)
+    summary_rows[[tag]] <- data.frame(gene_set = set, background = bg, n_genes = length(query),
+                                      significant_KEGG = if (n_sig) sum(res$result$source == "KEGG") else 0,
+                                      significant_GOBP = if (n_sig) sum(res$result$source == "GO:BP") else 0,
+                                      top_term = if (n_sig) res$result$term_name[which.min(res$result$p_value)] else NA)
+    cat("\n==", tag, ":", length(query), "genes,", n_sig, "significant terms\n")
+    if (n_sig == 0) next
+
+    results <- res$result %>% arrange(desc(intersection_size))
+    write.csv(results[, c("source", "term_id", "term_name", "p_value", "term_size", "query_size", "intersection_size", "intersection")],
+              file.path(En_dir, paste0("enrichment_", tag, ".csv")), row.names = FALSE)
+    for (src in unique(results$source)) {
+      src_results <- results %>% filter(source == src)
+      print(head(src_results[, c("term_name", "p_value", "term_size", "query_size", "intersection_size")], 10))
+      p <- plot_terms(src_results, src, sprintf("%s, %s genes (background: %s)", src, set, gsub("_", " ", bg)))
+      ggsave(file.path(En_dir, paste0(gsub(":", "", src), "_", tag, ".pdf")), p, width = 10, height = 7)
+    }
+  }
+}
+enrichment_summary <- do.call(rbind, summary_rows)
+write.csv(enrichment_summary, file.path(En_dir, "enrichment_summary.csv"), row.names = FALSE)
+cat("\n"); print(enrichment_summary, row.names = FALSE)
+
+# Closest terms for all DE genes against the tested genes, whether significant or not
+res_all <- gost(query = gene_sets$all, sources = c("KEGG", "GO:BP"), organism = "hsapiens",
+                custom_bg = tested_genes, significant = FALSE, as_short_link = FALSE, evcodes = TRUE)
+if (!is.null(res_all)) {
+  top_any <- res_all$result %>% arrange(p_value) %>% group_by(source) %>% dplyr::slice(1:15) %>% ungroup()
+  write.csv(top_any[, c("source", "term_id", "term_name", "p_value", "significant", "term_size", "query_size", "intersection_size", "intersection")],
+            file.path(En_dir, "top_terms_all_bg_tested_genes_unfiltered.csv"), row.names = FALSE)
+  cat("\nClosest terms, all DE genes vs tested genes (adjusted p, not filtered):\n")
+  print(as.data.frame(top_any[, c("source", "term_name", "p_value", "intersection_size")]))
 }

@@ -3,10 +3,13 @@
 # Multi-Resolution Clustering Analysis
 # ============================================================================
 # Purpose: Cluster cells at multiple resolutions (0.1 to 1.5 in 0.1 increments, Louvain)
-#          and create UMAP visualizations for comparison
+#          and create UMAP visualizations for comparison.
+#          Saved clusters (3.Results/6.Clustering/Louvain/cluster_metadata.rds) are reused when they cover
+#          every cell, so only the plots are remade; SC_RECLUSTER=true recomputes them.
 # Input: 3.Results/5.Normalisation/merged_normalised_seurat.rds
 # Output: 3.Results/6.Clustering/Louvain/
-#           seurat_multi_res_clustered.rds (RNA_snn_res.<resolution> columns)
+#           seurat_multi_res_clustered.rds (RNA_snn_res.<resolution> columns, SNN graph)
+#           cluster_metadata.rds (RNA_snn_res.<resolution> columns only)
 #           umap_resolution_<resolution>.pdf, umap_all_resolutions_combined.pdf, resolution_vs_clusters.pdf,
 #           clustree_stability.pdf, cluster_summary.csv, clustering_summary.txt
 # Usage: Rscript 2.Scripts/Clustering.R   (from any directory)
@@ -33,11 +36,15 @@ Root <- local({
 })
 if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 
+# Results folder: 3.Results, or the folder given in SC_RESULTS (relative to the repository root unless absolute)
+Results <- Sys.getenv("SC_RESULTS", "3.Results")
+if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
+
 # Input file path
-input_file <- file.path(Root, "3.Results", "5.Normalisation", "merged_normalised_seurat.rds")
+input_file <- file.path(Results, "5.Normalisation", "merged_normalised_seurat.rds")
 
 # Output directory
-outdir <- file.path(Root, "3.Results", "6.Clustering", "Louvain")
+outdir <- file.path(Results, "6.Clustering", "Louvain")
 dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 # Resolution parameters
@@ -45,6 +52,11 @@ resolutions <- seq(0.1, 1.5, by = 0.1)  # 0.1, 0.2, ..., 1.5
 
 # Number of dimensions to use (based on PCA from normalisation)
 n_dims <- 20  # Adjust this based on your elbow plot
+
+# Saved clusters to reuse instead of reclustering
+saved_clusters <- Sys.getenv("SC_SAVED_CLUSTERS",
+                             file.path(Root, "3.Results", "6.Clustering", "Louvain", "cluster_metadata.rds"))
+recluster <- tolower(Sys.getenv("SC_RECLUSTER", "false")) == "true"
 
 # ============================================================================
 # Load Data
@@ -108,6 +120,16 @@ message("\n========================================")
 message("CLUSTERING AT MULTIPLE RESOLUTIONS")
 message("========================================\n")
 
+# Use the saved clusters when they cover every cell (and reclustering is not requested)
+saved <- if (!recluster && file.exists(saved_clusters)) readRDS(saved_clusters) else NULL
+use_saved <- !is.null(saved) && all(colnames(seurat_obj) %in% rownames(saved)) &&
+  all(paste0("RNA_snn_res.", resolutions) %in% colnames(saved))
+if (use_saved) {
+  message("Using the saved clusters: ", saved_clusters)
+} else {
+  message("Clustering with Louvain", if (!is.null(saved)) " (the saved clusters do not cover every cell)" else "")
+}
+
 # Store clustering results and create plots
 umap_plots <- list()
 cluster_summary <- data.frame(
@@ -119,13 +141,17 @@ cluster_summary <- data.frame(
 for (res in resolutions) {
   message(sprintf("Processing resolution %.1f...", res))
 
-  # Run clustering
-  seurat_obj <- FindClusters(seurat_obj,
-                             resolution = res,
-                             verbose = FALSE)
-
   # Store the cluster identities with resolution-specific name
   cluster_col_name <- paste0("RNA_snn_res.", res)
+
+  # Run clustering, or take the saved clusters
+  if (use_saved) {
+    seurat_obj[[cluster_col_name]] <- droplevels(factor(saved[colnames(seurat_obj), cluster_col_name]))
+  } else {
+    seurat_obj <- FindClusters(seurat_obj,
+                               resolution = res,
+                               verbose = FALSE)
+  }
   n_clusters <- length(unique(seurat_obj[[cluster_col_name]][,1]))
 
   message(sprintf("  Found %d clusters", n_clusters))
@@ -237,7 +263,8 @@ cat("PARAMETERS:\n", file = summary_file)
 cat("  Number of dimensions used:", n_dims, "\n", file = summary_file)
 cat("  Resolution range: ", min(resolutions), " to ", max(resolutions), "\n", file = summary_file)
 cat("  Resolution step: 0.1\n", file = summary_file)
-cat("  Total resolutions tested:", length(resolutions), "\n\n", file = summary_file)
+cat("  Total resolutions tested:", length(resolutions), "\n", file = summary_file)
+cat("  Clusters:", if (use_saved) paste("saved,", saved_clusters) else "Louvain (FindClusters)", "\n\n", file = summary_file)
 
 cat("DATA:\n", file = summary_file)
 cat("  Total cells:", ncol(seurat_obj), "\n", file = summary_file)
@@ -290,6 +317,8 @@ message("Saved: clustering_summary.txt")
 message("\nSaving updated Seurat object with all resolution clustering...")
 saveRDS(seurat_obj, file.path(outdir, "seurat_multi_res_clustered.rds"))
 message("Saved: seurat_multi_res_clustered.rds")
+saveRDS(seurat_obj[[]][, paste0("RNA_snn_res.", resolutions), drop = FALSE], file.path(outdir, "cluster_metadata.rds"))
+message("Saved: cluster_metadata.rds")
 
 # ============================================================================
 # Final Summary

@@ -20,7 +20,10 @@ set -euo pipefail
 
 Root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 Data_dir="${Root}/1.Data"
-Out_dir="${Root}/3.Results/2.CellBender"
+# Results folder: 3.Results, or SC_RESULTS (relative to the repository root unless absolute)
+Results="${SC_RESULTS:-3.Results}"
+[[ "$Results" == /* ]] || Results="${Root}/${Results}"
+Out_dir="${Results}/2.CellBender"
 
 # CellBender settings (identical for all samples)
 Total_droplets=65000

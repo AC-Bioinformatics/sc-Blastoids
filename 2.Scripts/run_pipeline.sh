@@ -22,13 +22,20 @@
 #         bash 2.Scripts/run_pipeline.sh --from qc         # from one step to the end
 #         N_CORES=8 bash 2.Scripts/run_pipeline.sh         # workers for SingleR and ClustAssess (default 4)
 #         CELLBENDER=apptainer bash 2.Scripts/run_pipeline.sh   # CellBender in the container (apptainer or docker)
-# Logs:   3.Results/logs/<step>.log
+#         SC_RESULTS=test bash 2.Scripts/run_pipeline.sh --from qc   # write a separate run to test/ instead of 3.Results
+#         SC_RECLUSTER=true bash 2.Scripts/run_pipeline.sh       # recompute the Louvain clusters (default: reuse
+#                                                                # 3.Results/6.Clustering/Louvain/cluster_metadata.rds)
+# Logs:   <results folder>/logs/<step>.log
 
 set -euo pipefail
 
 Root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$Root"
-Log_dir="${Root}/3.Results/logs"
+# Results folder: 3.Results, or SC_RESULTS (relative to the repository root unless absolute)
+Results="${SC_RESULTS:-3.Results}"
+[[ "$Results" == /* ]] || Results="${Root}/${Results}"
+export SC_RESULTS="$Results"
+Log_dir="${Results}/logs"
 mkdir -p "$Log_dir"
 
 export N_CORES="${N_CORES:-4}"
@@ -69,9 +76,9 @@ started=false
 for step in "${Steps[@]}"; do
     [[ "$step" == "$From" ]] && started=true
     $started || continue
-    echo "$(date '+%F %H:%M:%S')  ${step}: started (log: 3.Results/logs/${step}.log)"
+    echo "$(date '+%F %H:%M:%S')  ${step}: started (log: ${Log_dir}/${step}.log)"
     if ! run_step "$step" > "${Log_dir}/${step}.log" 2>&1; then
-        echo "ERROR: ${step} failed; see 3.Results/logs/${step}.log" >&2
+        echo "ERROR: ${step} failed; see ${Log_dir}/${step}.log" >&2
         tail -20 "${Log_dir}/${step}.log" >&2
         exit 1
     fi

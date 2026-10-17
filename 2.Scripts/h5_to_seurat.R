@@ -14,7 +14,11 @@ Root <- local({
 })
 if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
 
-out_dir <- file.path(Root, "3.Results", "2.CellBender")
+# Results folder: 3.Results, or the folder given in SC_RESULTS (relative to the repository root unless absolute)
+Results <- Sys.getenv("SC_RESULTS", "3.Results")
+if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
+
+out_dir <- file.path(Results, "2.CellBender")
 if (!dir.exists(out_dir)) {
   dir.create(out_dir, recursive = TRUE)
 }

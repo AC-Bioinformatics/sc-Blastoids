@@ -27,9 +27,13 @@ Root <- local({
   if (length(f) == 1) normalizePath(file.path(dirname(f), "..")) else getwd()
 })
 if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (no 2.Scripts folder in ", Root, ")")
-input_rds  <- file.path(Root, "3.Results", "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
-singler_md <- file.path(Root, "3.Results", "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
-Out_dir    <- file.path(Root, "3.Results", "6.Clustering", "ClustAssess", if (test) "test" else "")
+
+# Results folder: 3.Results, or the folder given in SC_RESULTS (relative to the repository root unless absolute)
+Results <- Sys.getenv("SC_RESULTS", "3.Results")
+if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
+input_rds  <- file.path(Results, "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
+singler_md <- file.path(Results, "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
+Out_dir    <- file.path(Results, "6.Clustering", "ClustAssess", if (test) "test" else "")
 dir.create(Out_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Load libraries
