@@ -19,7 +19,8 @@
 #   1.Data/references/zhao2024_human_embryo/psd.R3.6.em.seurat.ob.rds, zhao2024_celltype_markers_top25.csv
 #
 # Usage:  bash 2.Scripts/run_pipeline.sh                   # all steps
-#         bash 2.Scripts/run_pipeline.sh --from qc         # from one step to the end
+#         bash 2.Scripts/run_pipeline.sh --from qc         # from one step to the end (from qc: skips CellBender, using
+#                                                          # 3.Results/2.CellBender/merged_filtered_seurat.rds, see 1.Data/README.md)
 #         N_CORES=8 bash 2.Scripts/run_pipeline.sh         # workers for SingleR and ClustAssess (default 4)
 #         CELLBENDER=apptainer bash 2.Scripts/run_pipeline.sh   # CellBender in the container (apptainer or docker)
 #         SC_RESULTS=test bash 2.Scripts/run_pipeline.sh --from qc   # write a separate run to test/ instead of 3.Results
