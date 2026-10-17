@@ -187,3 +187,45 @@ write_qc_figure <- function(qc, pdf_path) {
     theme(plot.tag = element_text(size = 40, face = "bold")))
   invisible(dev.off())
 }
+
+
+# Normalisation ----
+# Total variance of the scaled genes that went into the PCA, and their number
+scaled_total_variance <- function(obj, reduction = "pca", assay = "RNA") {
+  features <- rownames(Loadings(obj, reduction))
+  scaled <- LayerData(obj, assay = assay, layer = "scale.data")[features, ]
+  list(total = sum(apply(scaled, 1, var)), n_features = length(features))
+}
+
+# R^2 of each column of pc_scores regressed on the columns of X (with intercept)
+pc_r2 <- function(pc_scores, X) {
+  q <- qr(cbind(1, X))
+  apply(pc_scores, 2, function(y) 1 - sum(qr.resid(q, y)^2) / sum((y - mean(y))^2))
+}
+
+# One panel per sample with that sample's cells highlighted and the other cells in grey
+dimplot_highlight_by_sample <- function(obj, reduction, sample_cols) {
+  lapply(names(sample_cols), function(s) {
+    cells <- colnames(obj)[obj$Sample == s]
+    DimPlot(obj, reduction = reduction, dims = 1:2, cells.highlight = cells, cols.highlight = sample_cols[[s]],
+            cols = "grey85", sizes.highlight = 0.1, pt.size = 0.1) +
+      NoLegend() +
+      ggtitle(sprintf("%s (%s cells)", s, format(length(cells), big.mark = ","))) +
+      theme(plot.title = element_text(hjust = 0.5))
+  })
+}
+
+# One panel per sample showing only that sample's cells, on axes shared across panels
+dimplot_only_by_sample <- function(obj, reduction, sample_cols) {
+  emb <- Embeddings(obj, reduction)
+  x_lim <- range(emb[, 1])
+  y_lim <- range(emb[, 2])
+  lapply(names(sample_cols), function(s) {
+    DimPlot(subset(obj, cells = colnames(obj)[obj$Sample == s]), reduction = reduction, group.by = "Sample",
+            cols = sample_cols[[s]], pt.size = 0.1) +
+      NoLegend() +
+      coord_cartesian(xlim = x_lim, ylim = y_lim) +
+      ggtitle(sprintf("%s (%s cells)", s, format(sum(obj$Sample == s), big.mark = ","))) +
+      theme(plot.title = element_text(hjust = 0.5))
+  })
+}

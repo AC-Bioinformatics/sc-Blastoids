@@ -33,13 +33,13 @@ dir.create(file.path(Out_dir, "per_sample"), recursive = TRUE, showWarnings = FA
 # Thresholds (NULL switches a filter off)
 nFeatures_lower <- 2000
 nFeatures_upper <- 10000
-nCount_upper <- 50000
-mito_percent_hard <- 2.5
+nCount_upper <- NULL
+mito_percent_hard <- 10
 pct_counts_mt_nmads <- NULL
 log1p_total_counts_nmads <- 5
 log1p_n_genes_by_counts_nmads <- 5
 top_n_genes <- 20
-pct_counts_top20_nmads <- 5
+pct_counts_top20_nmads <- NULL
 mad_constant <- 1.4826
 
 t0 <- Sys.time()
@@ -97,7 +97,7 @@ for (s in samples_list) {
   pass <- list(
     nFeature_RNA = in_bounds(md$nFeature_RNA, bounds_nFeature),
     nCount_RNA_cap = below_cap(md$nCount_RNA, nCount_upper),
-    pct_counts_mt_cap = below_cap(md$pct_counts_mt, mito_percent_hard),
+    pct_counts_mt_cap = in_bounds(md$pct_counts_mt, hard_bounds(NULL, mito_percent_hard)),
     pct_counts_mt_mad = in_bounds(md$pct_counts_mt, bounds_mito_mad),
     log1p_total_counts_mad = in_bounds(md$log1p_total_counts, bounds_log1p_counts),
     log1p_n_genes_by_counts_mad = in_bounds(md$log1p_n_genes_by_counts, bounds_log1p_genes),
@@ -119,7 +119,7 @@ for (s in samples_list) {
   cat("\nThresholds applied:\n")
   cat("  nFeature_RNA hard bounds  :", nFeatures_lower, "<  x  <", nFeatures_upper, "\n")
   cat("  nCount_RNA hard cap       :", if (is.null(nCount_upper)) "off" else paste("<=", nCount_upper), "\n")
-  cat("  pct_counts_mt hard cap    :", if (is.null(mito_percent_hard)) "off" else paste("<=", mito_percent_hard), "\n")
+  cat("  pct_counts_mt hard cap    :", if (is.null(mito_percent_hard)) "off" else paste("<", mito_percent_hard), "\n")
   cat("  pct_counts_mt MAD nmads   :", or_default(pct_counts_mt_nmads, "off"), "\n")
   cat("  log1p_total_counts nmads  :", or_default(log1p_total_counts_nmads, "off"),
       sprintf("(%.3f < x < %.3f; nCount_RNA %.0f-%.0f)", bounds_log1p_counts["lower"], bounds_log1p_counts["upper"],
