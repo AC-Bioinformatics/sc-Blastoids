@@ -41,6 +41,10 @@ versions_used <- c(Seurat = "5.1.0", SeuratObject = "5.0.2", scCustomize = "3.3.
 install_missing(c("remotes", "BiocManager"), install.packages)
 install_missing(setdiff(cran_pkgs, c("remotes", "BiocManager")), install.packages)
 install_missing(bioc_pkgs, function(p) BiocManager::install(p, update = FALSE, ask = FALSE))
+# Newer SingleR versions use scrapper (a suggested package) for the Wilcoxon marker genes
+if (grepl("scrapper", packageDescription("SingleR")$Suggests %||% "")) {
+  install_missing("scrapper", function(p) BiocManager::install(p, update = FALSE, ask = FALSE))
+}
 for (p in names(github_pkgs)) {
   if (!have(p)) {
     message("Installing ", p, " from GitHub (", github_pkgs[[p]], ")")

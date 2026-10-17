@@ -26,3 +26,6 @@ __pycache__/
 # Container images (pulled locally, see 2.Scripts/cellbender_container.sh)
 *.sif
 containers/
+
+# Run logs (written by 2.Scripts/run_pipeline.sh)
+3.Results/logs/
