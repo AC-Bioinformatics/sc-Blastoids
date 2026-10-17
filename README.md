@@ -2,7 +2,7 @@
 
 Single-cell RNA-seq analysis of human blastoids (stem cell-derived models of the blastocyst) at three time points:
 24 h, 48 h and 72 h. The samples were profiled with 10x Genomics Flex (probe-based fixed RNA profiling) and pooled in a
-single capture with probe sample barcodes, so there is no technical batch between the time points; there is one sample
+single capture with probe sample barcodes, so minimal technical batch between the time points is expected. There is one sample
 per time point.
 
 The analysis goes from the raw 10X matrices to cell types and trajectories:
@@ -47,7 +47,7 @@ The analysis goes from the raw 10X matrices to cell types and trajectories:
    Rscript 2.Scripts/install_packages.R
    ```
 
-3. **Install CellBender** (only to start from the raw data); recommended in a conda environment:
+3. **Install CellBender** (only if you want to start from the raw data); recommended in a conda environment:
 
    ```
    conda create -n cellbender python=3.12
@@ -106,7 +106,7 @@ Set as environment variables in front of the command, e.g. `N_CORES=8 bash 2.Scr
 
 ## Runtime and memory
 
-Measured on the full dataset on a 16-core server:
+Benchmarked on the full dataset on a 16-core server:
 
 | Step | Time | Peak memory |
 |---|---|---|
