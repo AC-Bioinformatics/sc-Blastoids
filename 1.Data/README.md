@@ -33,7 +33,7 @@ This gives the layout the scripts expect:
 
 - From the raw data (runs CellBender, which needs a GPU or many hours on a CPU):
   `bash 2.Scripts/run_pipeline.sh`
-- From the merged object after CellBender, skipping CellBender and `h5_to_seurat.R`
+- You can use the seurat object provided here `merged_filtered_seurat.rds` if you want to skip cellbender and run the rest of the pipeline.
   (`QC.R` reads `1.Data/merged_filtered_seurat.rds` when `3.Results/2.CellBender/merged_filtered_seurat.rds` does not exist):
   `bash 2.Scripts/run_pipeline.sh --from qc`
 
