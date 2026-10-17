@@ -2,8 +2,7 @@
 # Clustering stability of the blastoid object with ClustAssess
 # [https://github.com/Core-Bioinformatics/ClustAssess] - the "Graph clustering" step of the
 # package's "Stability-based parameter assessment" vignette (assess_clustering_stability).
-#   - input: 3.Results/6.Clustering/Louvain/seurat_multi_res_clustered.rds
-#     (93,185 cells) + SingleR (Zhao 2024) labels (3.Results/7.Annotation/singler_zhao2024)
+#   - input: 3.Results/6.Clustering/Louvain/seurat_multi_res_clustered.rds (93,185 cells)
 #   - graph as in Clustering.R: SNN graph on 20 PCs, k = 20
 #   - resolutions 0.1-0.8; each resolution x algorithm is clustered n_repetitions times
 #     with different random seeds, and the stability of the partitions is measured with
@@ -32,7 +31,6 @@ if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (
 Results <- Sys.getenv("SC_RESULTS", "3.Results")
 if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
 input_rds  <- file.path(Results, "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
-singler_md <- file.path(Results, "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
 Out_dir    <- file.path(Results, "6.Clustering", "ClustAssess", if (test) "test" else "")
 dir.create(Out_dir, showWarnings = FALSE, recursive = TRUE)
 
@@ -56,17 +54,9 @@ ncores        <- as.integer(Sys.getenv("N_CORES", "1"))
 set.seed(42)
 if (test) { n_repetitions <- 2; resolutions <- c(0.3, 0.6) }
 
-# 1. Load the object and add the SingleR annotation
+# 1. Load the object
 seu <- readRDS(input_rds)
-sr  <- readRDS(singler_md)             # data.frame: one row per cell, rownames = cell barcodes
-message("Object: ", ncol(seu), " cells | SingleR table: ", nrow(sr), " cells x ", ncol(sr), " columns")
-missing <- setdiff(colnames(seu), rownames(sr))
-if (length(missing) > 0) {
-  stop(length(missing), " cells in the object have no SingleR annotation, e.g. ",
-       paste(head(missing, 3), collapse = ", "))
-}
-seu <- AddMetaData(seu, metadata = sr[colnames(seu), , drop = FALSE])
-print(table(seu$singler_label, useNA = "ifany"))
+message("Object: ", ncol(seu), " cells")
 
 if (test) {
   seu <- subset(seu, cells = sample(colnames(seu), 3000))

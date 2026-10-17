@@ -3,11 +3,11 @@
 # Uses the saved ClustAssess results (no reclustering), Louvain only (the algorithm
 # behind the saved RNA_snn_res.* clusters), resolutions 0.1-0.8.
 #   - per-cell ECC on the UMAP
-#   - ECC per saved cluster (RNA_snn_res.*) and per SingleR label
+#   - ECC per saved cluster (RNA_snn_res.*)
 #   - mean ECS between the saved clusters and ClustAssess's 10 Louvain runs
 # ECC = how consistently a cell keeps the same cluster-mates across random seeds (1 = always).
 # Output: 3.Results/6.Clustering/ClustAssess/
-#   ECC_per_cluster.csv, ECC_per_singler_label.csv, ECS_saved_clusters_vs_runs.csv, ECC_followup.pdf
+#   ECC_per_cluster.csv, ECS_saved_clusters_vs_runs.csv, ECC_followup.pdf
 # Usage:  Rscript 2.Scripts/ClustAssess_postprocess.R   (from any directory)
 
 # Path configuration
@@ -24,7 +24,6 @@ if (!dir.exists(file.path(Root, "2.Scripts"))) stop("Repository root not found (
 Results <- Sys.getenv("SC_RESULTS", "3.Results")
 if (!grepl("^(/|[A-Za-z]:)", Results)) Results <- file.path(Root, Results)
 input_rds  <- file.path(Results, "6.Clustering", "Louvain", "seurat_multi_res_clustered.rds")
-singler_md <- file.path(Results, "7.Annotation", "singler_zhao2024", "singler_metadata.rds")
 Out_dir    <- file.path(Results, "6.Clustering", "ClustAssess")
 
 library(Seurat)
@@ -32,10 +31,8 @@ library(ClustAssess)
 library(ggplot2)
 library(patchwork)
 
-# 1. Load the object, SingleR labels and the ClustAssess results
+# 1. Load the object and the ClustAssess results
 seu <- readRDS(input_rds)
-sr  <- readRDS(singler_md)
-seu$singler_label <- droplevels(sr[colnames(seu), "singler_label"])
 cs  <- readRDS(file.path(Out_dir, "clustering_stability.rds"))
 louvain <- cs$split_by_resolution$Louvain              # one entry per resolution ("0.1" ... "0.8")
 resolutions <- names(louvain)
@@ -46,7 +43,7 @@ for (res in resolutions) {
 }
 ecc_cols <- paste0("ecc_res", resolutions)
 
-# 3. Tables: median ECC per saved cluster and per SingleR label; ECS of saved clusters vs the 10 runs
+# 3. Tables: median ECC per saved cluster; ECS of saved clusters vs the 10 runs
 per_cluster <- do.call(rbind, lapply(resolutions, function(res) {
   cl <- seu[[paste0("RNA_snn_res.", res)]][, 1]
   ecc <- seu[[paste0("ecc_res", res)]][, 1]
@@ -54,10 +51,6 @@ per_cluster <- do.call(rbind, lapply(resolutions, function(res) {
              n_cells = as.vector(table(cl)), median_ecc = round(tapply(ecc, cl, median), 3))
 }))
 write.csv(per_cluster, file.path(Out_dir, "ECC_per_cluster.csv"), row.names = FALSE)
-
-per_label <- sapply(ecc_cols, function(e) tapply(seu[[e]][, 1], seu$singler_label, median))
-colnames(per_label) <- resolutions
-write.csv(round(per_label, 3), file.path(Out_dir, "ECC_per_singler_label.csv"))
 
 saved_vs_runs <- sapply(resolutions, function(res) {
   saved <- as.integer(factor(seu[[paste0("RNA_snn_res.", res)]][, 1]))   # labels 1..k (ClustAssess expects 1-based)
@@ -88,12 +81,5 @@ for (res in resolutions) {
     labs(title = paste("ECC per cluster, resolution", res), x = "Cluster", y = "ECC")
   print(p1 | p2)
 }
-
-# Median ECC per SingleR label x resolution
-hm <- as.data.frame(as.table(per_label)); colnames(hm) <- c("label", "resolution", "median_ecc")
-print(ggplot(hm, aes(resolution, label, fill = median_ecc)) +
-        geom_tile() + geom_text(aes(label = sprintf("%.2f", median_ecc)), size = 3) +
-        scale_fill_viridis_c(limits = c(0, 1)) +
-        labs(title = "Median ECC per SingleR label (Louvain)", x = "Resolution", y = NULL))
 dev.off()
 message("Outputs in ", Out_dir)
