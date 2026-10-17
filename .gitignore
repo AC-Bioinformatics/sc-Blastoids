@@ -35,3 +35,7 @@ containers/
 
 # Separate test runs (SC_RESULTS=test), kept on the server only
 test/
+
+# Figures over 50 MB (kept on the server)
+3.Results/6.Clustering/Louvain/umap_all_resolutions_combined.pdf
+3.Results/8.Pseudotime/flufftail/res0.3/consensus_heatmap.pdf
