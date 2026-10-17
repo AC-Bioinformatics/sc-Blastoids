@@ -1,0 +1,27 @@
+==================================================
+Per-Sample QC Thresholding
+Sample: 24h-blastoids 
+Generated on: 2026-10-17 20:37:45.863721 
+==================================================
+Cells in sample before filtering: 38972 
+
+Thresholds applied:
+  nFeature_RNA hard bounds  : 2000 <  x  < 10000 
+  nCount_RNA hard cap       : off 
+  pct_counts_mt hard cap    : < 10 
+  pct_counts_mt MAD nmads   : off 
+  log1p_total_counts nmads  : 5 (6.797 < x < 12.060; nCount_RNA 894-172758) 
+  log1p_n_genes_by_counts nmads: 5 (7.180 < x < 9.922; nFeature_RNA 1311-20367) 
+  pct_counts_top 20 _genes nmads: off 
+
+Cells removed by each filter (a cell can fail several):
+  nFeature_RNA                : 6691
+  nCount_RNA_cap              : 0
+  pct_counts_mt_cap           : 3133
+  pct_counts_mt_mad           : 0
+  log1p_total_counts_mad      : 3292
+  log1p_n_genes_by_counts_mad : 6183
+  pct_counts_top_mad          : 0
+
+Per-filter pass counts:
+  Combined (final) pass     : 32183 / 38972 ( 82.6 %)

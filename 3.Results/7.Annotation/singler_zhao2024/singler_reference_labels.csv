@@ -1,0 +1,82 @@
+"label","stage","publication","Freq"
+"Morula","E4","Meistermann et al",22
+"Morula","E5","Meistermann et al",7
+"Prelineage","E5","Meistermann et al",8
+"Early EPI","E5","Meistermann et al",3
+"Early TE","E5","Meistermann et al",10
+"Early EPI","E6","Meistermann et al",28
+"Early PrE","E6","Meistermann et al",2
+"Early TE","E6","Meistermann et al",60
+"Cleavage","E3","Petropoulos et al",64
+"Morula","E4","Petropoulos et al",156
+"Morula","E5","Petropoulos et al",5
+"Prelineage","E5","Petropoulos et al",106
+"ICM","E5","Petropoulos et al",29
+"EPI/PrE intermediate","E5","Petropoulos et al",8
+"Early EPI","E5","Petropoulos et al",20
+"Early PrE","E5","Petropoulos et al",2
+"Early TE","E5","Petropoulos et al",85
+"EPI/PrE intermediate","E6","Petropoulos et al",5
+"Early EPI","E6","Petropoulos et al",34
+"Early PrE","E6","Petropoulos et al",16
+"Early TE","E6","Petropoulos et al",255
+"EPI/PrE intermediate","E7","Petropoulos et al",3
+"Early EPI","E7","Petropoulos et al",25
+"Early PrE","E7","Petropoulos et al",27
+"Mature TE","E7","Petropoulos et al",353
+"Amnion","CS7","Tyser et al",48
+"Early EPI","E10","Xiang et al",1
+"Late EPI","E10","Xiang et al",12
+"Early PrE","E10","Xiang et al",2
+"Late PrE","E10","Xiang et al",1
+"CTB","E10","Xiang et al",30
+"STB","E10","Xiang et al",29
+"Late EPI","E12","Xiang et al",18
+"Late PrE","E12","Xiang et al",8
+"CTB","E12","Xiang et al",24
+"STB","E12","Xiang et al",27
+"EVT","E12","Xiang et al",4
+"ExE mesoderm","E12","Xiang et al",2
+"Early EPI","E14","Xiang et al",1
+"Late EPI","E14","Xiang et al",31
+"Late PrE","E14","Xiang et al",6
+"CTB","E14","Xiang et al",5
+"STB","E14","Xiang et al",30
+"EVT","E14","Xiang et al",37
+"ExE mesoderm","E14","Xiang et al",14
+"Early EPI","E6","Xiang et al",21
+"Early PrE","E6","Xiang et al",2
+"Early TE","E6","Xiang et al",29
+"CTB","E6","Xiang et al",1
+"Early EPI","E7","Xiang et al",14
+"Early PrE","E7","Xiang et al",5
+"Mature TE","E7","Xiang et al",42
+"CTB","E7","Xiang et al",2
+"Early EPI","E8","Xiang et al",9
+"Late EPI","E8","Xiang et al",1
+"Early PrE","E8","Xiang et al",2
+"Mature TE","E8","Xiang et al",16
+"CTB","E8","Xiang et al",17
+"STB","E8","Xiang et al",13
+"Early EPI","E9","Xiang et al",2
+"Late EPI","E9","Xiang et al",8
+"Early PrE","E9","Xiang et al",3
+"CTB","E9","Xiang et al",42
+"STB","E9","Xiang et al",13
+"Cleavage","E1","Yan et al",6
+"Cleavage","E2","Yan et al",12
+"Cleavage","E3","Yan et al",20
+"Morula","E4","Yan et al",12
+"Early EPI","E6","Yan et al",4
+"Early PrE","E6","Yan et al",2
+"Early TE","E6","Yan et al",22
+"Cleavage","Zygote","Yan et al",2
+"Prelineage","E5","Yanagida et al",15
+"ICM","E5","Yanagida et al",22
+"Early TE","E5","Yanagida et al",15
+"Early EPI","E6","Yanagida et al",16
+"Early PrE","E6","Yanagida et al",7
+"Early TE","E6","Yanagida et al",41
+"Early EPI","E7","Yanagida et al",11
+"Early PrE","E7","Yanagida et al",7
+"Mature TE","E7","Yanagida et al",54

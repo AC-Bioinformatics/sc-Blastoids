@@ -1,0 +1,49 @@
+==================================================
+COMBINED QC THRESHOLDING REPORT
+Generated on: 2026-10-17 20:38:25.22485 
+==================================================
+
+Input: /trinity/storage/projects/APAP/sc-Blastoids/3.Results/2.CellBender/merged_filtered_seurat.rds 
+Before filtering: 104758 cells, 37143 genes
+Samples: 24h-blastoids, 48h-blastoids, 72h-blastoids 
+
+==================================================
+PER-SAMPLE RESULTS
+==================================================
+
+ 24h-blastoids :
+  Cells before:  38972 
+  Cells after:   32183 
+  Retained:      82.58 %
+  Removed by filter: nFeature_RNA = 6691, nCount_RNA_cap = 0, pct_counts_mt_cap = 3133, pct_counts_mt_mad = 0, log1p_total_counts_mad = 3292, log1p_n_genes_by_counts_mad = 6183, pct_counts_top_mad = 0 
+
+ 48h-blastoids :
+  Cells before:  34374 
+  Cells after:   32112 
+  Retained:      93.42 %
+  Removed by filter: nFeature_RNA = 2222, nCount_RNA_cap = 0, pct_counts_mt_cap = 563, pct_counts_mt_mad = 0, log1p_total_counts_mad = 1258, log1p_n_genes_by_counts_mad = 1978, pct_counts_top_mad = 0 
+
+ 72h-blastoids :
+  Cells before:  31412 
+  Cells after:   28890 
+  Retained:      91.97 %
+  Removed by filter: nFeature_RNA = 2461, nCount_RNA_cap = 0, pct_counts_mt_cap = 458, pct_counts_mt_mad = 0, log1p_total_counts_mad = 945, log1p_n_genes_by_counts_mad = 1792, pct_counts_top_mad = 0 
+
+==================================================
+OVERALL SUMMARY
+==================================================
+Total cells before filtering: 104758 
+Total cells after filtering : 93185 
+Retained: 89 % of cells overall
+
+Saturation fit, log10(nFeature_RNA) = Asym + (R0 - Asym) * exp(-exp(lrc) * log10(nCount_RNA)):
+  prefilt  24h-blastoids              Asym = 5.080, R0 = -4.362, lrc = -0.759
+  prefilt  48h-blastoids              Asym = 4.638, R0 = -6.525, lrc = -0.499
+  prefilt  72h-blastoids              Asym = 4.627, R0 = -5.873, lrc = -0.522
+  postfilt 24h-blastoids              Asym = 4.344, R0 = -12.489, lrc = -0.221
+  postfilt 48h-blastoids              Asym = 4.356, R0 = -10.485, lrc = -0.265
+  postfilt 72h-blastoids              Asym = 4.273, R0 = -14.338, lrc = -0.159
+
+Saved filtered object to: merged_postfilt_seurat.rds
+Combined PDFs written to: QC_plots_combined_prefilt.pdf, QC_plots_combined_postfilt.pdf
+QC figures written to: QC_figure_prefilt.pdf, QC_figure_postfilt.pdf

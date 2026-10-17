@@ -1,0 +1,998 @@
+==================================================
+SingleR annotation against the Zhao 2024 human embryo reference
+==================================================
+Input: /trinity/storage/projects/APAP/sc-Blastoids/3.Results/6.Clustering/Louvain/seurat_multi_res_clustered.rds 
+Reference: /trinity/storage/projects/APAP/sc-Blastoids/1.Data/references/zhao2024_human_embryo/psd.R3.6.em.seurat.ob.rds 
+Generated on: 2026-10-17 21:27:14.310343 
+Cells: 93185 | samples: 24h-blastoids = 32183, 48h-blastoids = 32112, 72h-blastoids = 28890 
+Reference cells: 2173 (CS7 gastrula removed except amnion ) | genes shared: 27533 
+SingleR: de.method wilcox , de.n 20 , quantile 0.8, fine-tuning on, pruning on (per cell)
+Cluster label: SingleR on the mean log-normalised profile of each cluster
+
+Reference labels by stage:
+                      
+                       Zygote  E1  E2  E3  E4  E5  E6  E7  E8  E9 E10 E12 E14
+  Cleavage                  2   6  12  84   0   0   0   0   0   0   0   0   0
+  Morula                    0   0   0   0 190  12   0   0   0   0   0   0   0
+  Prelineage                0   0   0   0   0 129   0   0   0   0   0   0   0
+  ICM                       0   0   0   0   0  51   0   0   0   0   0   0   0
+  EPI/PrE intermediate      0   0   0   0   0   8   5   3   0   0   0   0   0
+  Early EPI                 0   0   0   0   0  23 103  50   9   2   1   0   1
+  Late EPI                  0   0   0   0   0   0   0   0   1   8  12  18  31
+  Early PrE                 0   0   0   0   0   2  29  39   2   3   2   0   0
+  Late PrE                  0   0   0   0   0   0   0   0   0   0   1   8   6
+  Early TE                  0   0   0   0   0 110 407   0   0   0   0   0   0
+  Mature TE                 0   0   0   0   0   0   0 449  16   0   0   0   0
+  CTB                       0   0   0   0   0   0   1   2  17  42  30  24   5
+  STB                       0   0   0   0   0   0   0   0  13  13  29  27  30
+  EVT                       0   0   0   0   0   0   0   0   0   0   0   4  37
+  ExE mesoderm              0   0   0   0   0   0   0   0   0   0   0   2  14
+  Amnion                    0   0   0   0   0   0   0   0   0   0   0   0   0
+                      
+                       CS7
+  Cleavage               0
+  Morula                 0
+  Prelineage             0
+  ICM                    0
+  EPI/PrE intermediate   0
+  Early EPI              0
+  Late EPI               0
+  Early PrE              0
+  Late PrE               0
+  Early TE               0
+  Mature TE              0
+  CTB                    0
+  STB                    0
+  EVT                    0
+  ExE mesoderm           0
+  Amnion                48
+
+Per-cell labels (Pruned = low confidence), % of each sample:
+                      
+                       24h-blastoids 48h-blastoids 72h-blastoids
+  Cleavage                       0.0           0.0           0.0
+  Morula                         0.1           0.1           0.0
+  Prelineage                     0.4           0.8           0.2
+  ICM                            4.5           4.2           2.7
+  EPI/PrE intermediate           3.7           5.9           3.2
+  Early EPI                     80.2          43.9          26.8
+  Late EPI                       0.2           0.1           0.2
+  Early PrE                      0.6           0.4           0.5
+  Late PrE                       0.0           0.0           0.0
+  Early TE                       9.5          37.9          14.6
+  Mature TE                      0.5           6.0          41.0
+  CTB                            0.2           0.3           7.4
+  STB                            0.1           0.1           2.3
+  EVT                            0.0           0.0           0.0
+  ExE mesoderm                   0.0           0.0           0.0
+  Amnion                         0.0           0.0           0.0
+  Pruned                         0.0           0.1           1.0
+
+Per-cell lineages, % of each sample:
+                               
+                                24h-blastoids 48h-blastoids 72h-blastoids
+  Pre-lineage                             0.4           0.9           0.2
+  ICM                                     8.2          10.1           6.0
+  Epiblast                               80.4          44.0          27.0
+  Primitive endoderm                      0.6           0.4           0.5
+  Trophectoderm                          10.0          44.0          55.6
+  Post-implantation trophoblast           0.3           0.4           9.7
+  Extraembryonic mesoderm                 0.0           0.0           0.0
+  Amnion                                  0.0           0.0           0.0
+  Pruned                                  0.0           0.1           1.0
+
+--------------------------------------------------
+Cluster labels per resolution
+--------------------------------------------------
+
+--- Resolution 0.1 ---
+ cluster cells     label         second_label delta_next majority_cell_label
+       0 36471 Mature TE             Early TE      0.091            Early TE
+       1 31234 Early EPI EPI/PrE intermediate      0.028           Early EPI
+       2 24976 Early EPI EPI/PrE intermediate      0.017           Early EPI
+       3   504 Early PrE EPI/PrE intermediate      0.374           Early PrE
+ majority_share pct_pruned pct_24h-blastoids pct_48h-blastoids
+           44.4        0.5               3.5              43.2
+           83.5        0.1              95.9               3.1
+           82.8        0.4               3.1              61.0
+           88.5        0.2              42.9              25.4
+ pct_72h-blastoids
+              53.3
+               1.0
+              35.9
+              31.7
+
+--- Resolution 0.2 ---
+ cluster cells     label         second_label delta_next majority_cell_label
+       0 26216 Early EPI EPI/PrE intermediate      0.017           Early EPI
+       1 23527  Early TE            Mature TE      0.006            Early TE
+       2 20621 Early EPI EPI/PrE intermediate      0.026           Early EPI
+       3 13714 Early EPI EPI/PrE intermediate      0.011           Early EPI
+       4  5204       CTB            Mature TE      0.053           Mature TE
+       5  3386 Mature TE             Early TE      0.005            Early TE
+       6   517 Early PrE EPI/PrE intermediate      0.364           Early PrE
+ majority_share pct_pruned pct_24h-blastoids pct_48h-blastoids
+           78.1        0.5               2.8              62.2
+           53.8        0.4               2.9              48.9
+           81.6        0.0              97.9               2.0
+           72.3        0.4              74.3              15.4
+           52.2        0.0               2.5               3.5
+           36.1        1.3               1.5              42.7
+           86.3        0.4              43.5              24.8
+ pct_72h-blastoids
+              35.0
+              48.2
+               0.1
+              10.3
+              94.0
+              55.8
+              31.7
+
+--- Resolution 0.3 ---
+ cluster cells                label         second_label delta_next
+       0 22349             Early TE            Mature TE      0.042
+       1 19663            Early EPI EPI/PrE intermediate      0.026
+       2 13704            Early EPI EPI/PrE intermediate      0.017
+       3 11536            Early EPI EPI/PrE intermediate      0.021
+       4  8920            Early EPI EPI/PrE intermediate      0.036
+       5  8195            Mature TE                  CTB      0.077
+       6  3687            Mature TE             Early TE      0.003
+       7  3669 EPI/PrE intermediate             Early TE      0.004
+       8   810            Early EPI EPI/PrE intermediate      0.010
+       9   510            Early PrE EPI/PrE intermediate      0.368
+      10   142            Early EPI EPI/PrE intermediate      0.004
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+            Early TE           61.3        0.4               5.4
+           Early EPI           83.8        0.0              98.0
+           Early EPI           86.1        0.2               2.2
+           Early EPI           75.5        0.8               3.6
+           Early EPI           88.0        0.0              97.7
+           Mature TE           67.8        0.0               2.4
+            Early TE           35.3        1.4               1.8
+           Early EPI           34.9        1.3              33.0
+           Early EPI           75.9        0.7              65.9
+           Early PrE           87.5        0.4              42.7
+              Morula           43.0        0.0              28.9
+ pct_48h-blastoids pct_72h-blastoids
+              54.9              39.7
+               1.9               0.1
+              63.4              34.3
+              59.0              37.4
+               2.1               0.1
+               5.7              91.9
+              43.8              54.3
+              37.2              29.8
+              17.0              17.0
+              25.1              32.2
+              49.3              21.8
+
+--- Resolution 0.4 ---
+ cluster cells                label         second_label delta_next
+       0 19325            Early EPI EPI/PrE intermediate      0.027
+       1 14933            Mature TE             Early TE      0.096
+       2 12348            Early EPI EPI/PrE intermediate      0.017
+       3 11269            Early EPI EPI/PrE intermediate      0.021
+       4  9398            Early EPI EPI/PrE intermediate      0.033
+       5  8606 EPI/PrE intermediate             Early TE      0.195
+       6  5495             Early TE            Mature TE      0.026
+       7  5144                  CTB            Mature TE      0.053
+       8  3730            Mature TE             Early TE      0.002
+       9  2270            Early EPI EPI/PrE intermediate      0.015
+      10   528            Early PrE EPI/PrE intermediate      0.353
+      11   139            Early EPI EPI/PrE intermediate      0.002
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           82.9        0.0              98.0
+           Mature TE           55.4        0.1               2.1
+           Early EPI           89.7        0.2               2.1
+           Early EPI           77.1        0.7               3.6
+           Early EPI           88.3        0.0              97.9
+            Early TE           66.5        0.4               8.6
+            Early TE           56.4        1.5               5.1
+           Mature TE           52.2        0.0               2.5
+            Early TE           35.5        1.4               2.2
+           Early EPI           78.1        1.1              68.5
+           Early PrE           84.5        0.6              42.4
+              Morula           43.9        0.0              29.5
+ pct_48h-blastoids pct_72h-blastoids
+               1.9               0.1
+              39.4              58.4
+              62.3              35.5
+              59.0              37.4
+               2.0               0.1
+              73.7              17.7
+              46.6              48.4
+               3.4              94.1
+              44.1              53.7
+              17.9              13.6
+              24.2              33.3
+              48.2              22.3
+
+--- Resolution 0.5 ---
+ cluster cells                label         second_label delta_next
+       0 12782            Mature TE             Early TE      0.162
+       1 11089            Early EPI EPI/PrE intermediate      0.026
+       2 10814 EPI/PrE intermediate             Early TE      0.195
+       3 10660            Early EPI EPI/PrE intermediate      0.020
+       4 10319            Early EPI EPI/PrE intermediate      0.033
+       5  9185            Early EPI EPI/PrE intermediate      0.023
+       6  7985            Early EPI EPI/PrE intermediate      0.026
+       7  5399            Early EPI EPI/PrE intermediate      0.008
+       8  4834             Early TE            Mature TE      0.027
+       9  4714                  CTB            Mature TE      0.059
+      10  3734            Mature TE             Early TE      0.003
+      11  1011            Early EPI EPI/PrE intermediate      0.003
+      12   519            Early PrE EPI/PrE intermediate      0.359
+      13   140 EPI/PrE intermediate            Early EPI      0.005
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Mature TE           66.4        0.0               1.5
+           Early EPI           90.6        0.0              98.4
+            Early TE           77.9        0.4              16.4
+           Early EPI           74.6        0.8               3.5
+           Early EPI           86.8        0.2              90.4
+           Early EPI           84.3        0.3               2.6
+           Early EPI           80.7        0.0              97.7
+           Early EPI           83.7        0.1               1.8
+            Early TE           55.7        1.7               5.5
+           Mature TE           49.3        0.0               2.8
+            Early TE           35.3        1.3               1.8
+           Early EPI           79.9        0.6              72.4
+           Early PrE           85.9        0.6              42.2
+              Morula           43.6        0.0              29.3
+ pct_48h-blastoids pct_72h-blastoids
+              30.6              67.8
+               1.6               0.0
+              68.2              15.4
+              59.7              36.7
+               6.7               2.9
+              61.1              36.3
+               2.1               0.2
+              68.1              30.2
+              41.3              53.2
+               3.5              93.7
+              43.8              54.3
+              13.8              13.7
+              24.7              33.1
+              48.6              22.1
+
+--- Resolution 0.6 ---
+ cluster cells                label         second_label delta_next
+       0 11151             Early TE            Mature TE      0.035
+       1 10849            Early EPI EPI/PrE intermediate      0.021
+       2  9397            Early EPI             Late EPI      0.016
+       3  9106            Early EPI EPI/PrE intermediate      0.025
+       4  8138            Early EPI             Late EPI      0.036
+       5  6879 EPI/PrE intermediate             Early TE      0.167
+       6  6571            Early EPI EPI/PrE intermediate      0.052
+       7  6456            Mature TE                  CTB      0.227
+       8  5406            Early EPI EPI/PrE intermediate      0.008
+       9  5201                  CTB            Mature TE      0.050
+      10  4726 EPI/PrE intermediate            Early EPI      0.015
+      11  4026 EPI/PrE intermediate             Early TE      0.014
+      12  3776            Mature TE             Early TE      0.002
+      13   835            Early EPI EPI/PrE intermediate      0.008
+      14   525            Early PrE EPI/PrE intermediate      0.352
+      15   143 EPI/PrE intermediate            Early EPI      0.005
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+            Early TE           70.7        0.8               3.3
+           Early EPI           75.0        0.8               3.5
+           Early EPI           93.4        0.0              98.6
+           Early EPI           82.0        0.3               2.5
+           Early EPI           91.3        0.0              97.8
+            Early TE           73.3        0.1               8.8
+           Early EPI           94.9        0.0              98.0
+           Mature TE           89.7        0.0               1.4
+           Early EPI           84.1        0.1               1.9
+           Mature TE           52.6        0.0               2.5
+           Early EPI           40.0        0.1              95.4
+           Early EPI           42.7        1.1              31.4
+            Early TE           35.6        1.3               1.5
+           Early EPI           76.2        0.7              64.1
+           Early PrE           85.0        0.8              41.9
+              Morula           43.4        0.0              28.7
+ pct_48h-blastoids pct_72h-blastoids
+              56.9              39.7
+              59.2              37.3
+               1.4               0.0
+              61.8              35.7
+               2.1               0.2
+              70.9              20.4
+               1.8               0.2
+              12.6              86.1
+              68.3              29.8
+               3.4              94.1
+               4.5               0.1
+              37.0              31.6
+              44.8              53.7
+              17.4              18.6
+              24.4              33.7
+              49.7              21.7
+
+--- Resolution 0.7 ---
+ cluster cells                label         second_label delta_next
+       0  9589            Early EPI             Late EPI      0.016
+       1  9000             Early TE            Mature TE      0.036
+       2  7806            Early EPI             Late EPI      0.023
+       3  7719 EPI/PrE intermediate            Early EPI      0.026
+       4  7659            Early EPI EPI/PrE intermediate      0.025
+       5  7525            Early EPI             Late EPI      0.036
+       6  6784            Early EPI             Late EPI      0.019
+       7  6763 EPI/PrE intermediate             Early TE      0.167
+       8  6318            Mature TE                  CTB      0.233
+       9  5617            Early EPI EPI/PrE intermediate      0.008
+      10  4778                  CTB            Mature TE      0.057
+      11  3996 EPI/PrE intermediate            Early EPI      0.022
+      12  3684            Mature TE             Early TE      0.003
+      13  2906            Early EPI EPI/PrE intermediate      0.026
+      14  1355            Mature TE             Early TE      0.175
+      15   961            Early EPI EPI/PrE intermediate      0.003
+      16   531            Early PrE EPI/PrE intermediate      0.352
+      17   145            Early EPI EPI/PrE intermediate      0.004
+      18    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           93.2        0.0              98.5
+            Early TE           69.0        0.9               2.7
+           Early EPI           86.9        0.7               3.1
+            Early TE           38.8        0.7               3.3
+           Early EPI           87.7        0.0              98.1
+           Early EPI           92.2        0.0              98.0
+           Early EPI           90.6        0.3               2.4
+            Early TE           71.7        0.1               3.9
+           Mature TE           91.0        0.0               1.6
+           Early EPI           82.4        0.1               1.8
+           Mature TE           51.0        0.0               2.4
+            Early TE           42.8        0.1              95.0
+            Early TE           35.3        1.3               2.1
+           Early EPI           68.6        0.9              50.6
+           Mature TE           62.4        0.7               2.3
+           Early EPI           79.5        0.6              70.4
+           Early PrE           84.0        0.8              42.4
+              Morula           42.8        0.0              28.3
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.5               0.0
+              50.2              47.0
+              54.5              42.4
+              75.3              21.4
+               1.7               0.2
+               1.9               0.1
+              58.1              39.5
+              71.6              24.5
+              12.3              86.1
+              68.1              30.1
+               3.2              94.4
+               4.9               0.1
+              43.3              54.6
+              34.8              14.6
+              30.4              67.3
+              15.0              14.6
+              24.1              33.5
+              49.0              22.8
+               0.0               0.0
+
+--- Resolution 0.8 ---
+ cluster cells                label         second_label delta_next
+       0  9673            Early EPI             Late EPI      0.016
+       1  8879            Early EPI EPI/PrE intermediate      0.023
+       2  8308            Early EPI EPI/PrE intermediate      0.036
+       3  7284 EPI/PrE intermediate             Early TE      0.179
+       4  6963            Mature TE             Early TE      0.190
+       5  6180            Early EPI EPI/PrE intermediate      0.052
+       6  6130 EPI/PrE intermediate             Early TE      0.167
+       7  5663            Mature TE                  CTB      0.056
+       8  5304            Early EPI EPI/PrE intermediate      0.007
+       9  5251 EPI/PrE intermediate             Early TE      0.172
+      10  4847            Early EPI             Late EPI      0.015
+      11  4592 EPI/PrE intermediate            Early EPI      0.023
+      12  4183 EPI/PrE intermediate            Early EPI      0.014
+      13  3820            Mature TE             Early TE      0.003
+      14  3710            Early EPI EPI/PrE intermediate      0.060
+      15  1005            Early EPI EPI/PrE intermediate      0.003
+      16   677                  STB                  CTB      0.535
+      17   526            Early PrE EPI/PrE intermediate      0.352
+      18   141 EPI/PrE intermediate            Early EPI      0.004
+      19    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           93.5        0.0              98.6
+           Early EPI           82.6        0.3               2.6
+           Early EPI           88.1        0.0              97.7
+            Early TE           80.3        0.5               4.1
+           Mature TE           81.8        0.0               1.6
+           Early EPI           95.1        0.0              98.1
+            Early TE           69.7        0.1               2.9
+           Mature TE           63.9        0.0               2.1
+           Early EPI           87.3        0.1               2.0
+            Early TE           49.1        1.5               3.6
+           Early EPI           82.2        1.2               3.2
+            Early TE           42.9        0.1              95.0
+           Early EPI           46.2        1.0              35.9
+            Early TE           35.6        1.3               1.7
+           Early EPI           91.2        0.0               3.3
+           Early EPI           78.6        0.6              69.2
+                 STB           77.5        0.1               4.1
+           Early PrE           84.8        0.8              41.8
+              Morula           44.0        0.0              29.1
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.4               0.0
+              61.8              35.7
+               2.2               0.1
+              70.7              25.2
+              21.6              76.8
+               1.7               0.2
+              69.1              28.0
+               4.2              93.7
+              67.4              30.7
+              55.4              41.0
+              54.3              42.5
+               4.9               0.1
+              35.2              28.9
+              44.5              53.8
+              59.2              37.5
+              15.0              15.8
+               4.0              91.9
+              24.3              33.8
+              48.9              22.0
+               0.0               0.0
+
+--- Resolution 0.9 ---
+ cluster cells                label         second_label delta_next
+       0  9484            Early EPI             Late EPI      0.016
+       1  8644            Early EPI EPI/PrE intermediate      0.036
+       2  7337             Early TE            Mature TE      0.043
+       3  6562            Early EPI             Late EPI      0.023
+       4  6540            Early EPI EPI/PrE intermediate      0.052
+       5  6087            Early EPI EPI/PrE intermediate      0.013
+       6  5519            Early EPI EPI/PrE intermediate      0.008
+       7  4785            Mature TE                  CTB      0.233
+       8  4673            Mature TE             Early TE      0.024
+       9  4313 EPI/PrE intermediate            Early EPI      0.028
+      10  4235 EPI/PrE intermediate            Early EPI      0.026
+      11  4221             Early TE            Mature TE      0.036
+      12  4061 EPI/PrE intermediate            Early EPI      0.015
+      13  4039            Mature TE                  CTB      0.013
+      14  3774            Mature TE             Early TE      0.004
+      15  3453            Early EPI EPI/PrE intermediate      0.060
+      16  2975 EPI/PrE intermediate             Early TE      0.128
+      17  1006            Early EPI EPI/PrE intermediate      0.003
+      18   759                  STB                  CTB      0.515
+      19   528            Early PrE EPI/PrE intermediate      0.352
+      20   141 EPI/PrE intermediate            Early EPI      0.004
+      21    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           93.0        0.0              98.6
+           Early EPI           87.9        0.0              97.6
+            Early TE           71.9        0.4               2.8
+           Early EPI           91.8        0.2               2.5
+           Early EPI           95.2        0.0              98.1
+           Early EPI           75.5        1.2               2.8
+           Early EPI           85.1        0.1               1.9
+           Mature TE           93.4        0.0               1.8
+            Early TE           51.0        0.0               2.4
+            Early TE           45.2        0.1              95.1
+           Early EPI           38.5        0.7               2.9
+            Early TE           56.7        1.5               3.6
+           Early EPI           44.2        1.0              32.4
+           Mature TE           55.6        0.0               2.1
+            Early TE           34.9        1.3               1.8
+           Early EPI           91.0        0.0               3.4
+            Early TE           78.3        0.2               4.7
+           Early EPI           78.4        0.6              69.3
+                 STB           77.7        0.1               5.0
+           Early PrE           84.5        0.8              41.9
+              Morula           44.0        0.0              29.1
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.4               0.0
+               2.2               0.1
+              57.7              39.5
+              59.1              38.5
+               1.7               0.2
+              56.0              41.2
+              68.1              30.0
+              12.0              86.2
+              51.2              46.4
+               4.8               0.1
+              72.5              24.6
+              49.0              47.5
+              37.5              30.1
+               3.3              94.6
+              43.4              54.7
+              59.1              37.6
+              79.3              16.0
+              14.9              15.8
+               5.0              90.0
+              24.2              33.9
+              48.9              22.0
+               0.0               0.0
+
+--- Resolution 1 ---
+ cluster cells                label         second_label delta_next
+       0  9321            Early EPI             Late EPI      0.020
+       1  7822            Early EPI EPI/PrE intermediate      0.036
+       2  7010            Mature TE             Early TE      0.074
+       3  6369            Early EPI             Late EPI      0.052
+       4  6290            Early EPI EPI/PrE intermediate      0.013
+       5  6046             Early TE            Mature TE      0.005
+       6  6014            Early EPI EPI/PrE intermediate      0.054
+       7  5469            Early EPI EPI/PrE intermediate      0.036
+       8  5300 EPI/PrE intermediate             Early TE      0.183
+       9  5207            Early EPI EPI/PrE intermediate      0.007
+      10  4738 EPI/PrE intermediate            Early EPI      0.019
+      11  3783            Mature TE             Early TE      0.003
+      12  3461             Early TE EPI/PrE intermediate      0.035
+      13  3451            Mature TE                  CTB      0.106
+      14  2884            Early EPI             Late EPI      0.025
+      15  2244            Mature TE                  CTB      0.115
+      16  2228             Early TE            Mature TE      0.018
+      17  2119 EPI/PrE intermediate             Early TE      0.171
+      18  1685                  STB                  CTB      0.251
+      19  1023            Early EPI EPI/PrE intermediate      0.002
+      20   530            Early PrE EPI/PrE intermediate      0.352
+      21   142 EPI/PrE intermediate            Early EPI      0.004
+      22    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           92.5        0.0              98.4
+           Early EPI           88.3        0.1              97.8
+           Mature TE           54.4        0.2               1.4
+           Early EPI           95.5        0.0              98.2
+           Early EPI           74.6        1.2               2.9
+            Early TE           56.4        0.0               2.3
+           Early EPI           90.6        0.0               3.3
+           Early EPI           85.8        0.5               2.2
+            Early TE           66.9        0.4               4.2
+           Early EPI           86.6        0.1               1.9
+            Early TE           41.7        0.1              95.5
+            Early TE           35.8        1.3               1.7
+            Early TE           63.2        1.8               3.7
+           Mature TE           74.1        0.0               3.0
+           Early EPI           83.6        0.5              62.4
+           Mature TE           75.4        0.0               1.0
+            Early TE           48.7        1.3              11.0
+            Early TE           66.0        0.2               3.5
+                 STB           43.3        0.1               3.3
+           Early EPI           78.9        0.6              69.7
+           Early PrE           84.2        0.8              42.5
+              Morula           43.7        0.0              28.9
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.5               0.0
+               2.1               0.1
+              37.3              61.3
+               1.6               0.2
+              56.9              40.2
+              53.6              44.1
+              59.9              36.8
+              60.1              37.6
+              77.6              18.2
+              67.6              30.5
+               4.4               0.1
+              44.0              54.3
+              48.8              47.4
+               7.3              89.7
+              25.2              12.4
+               2.0              97.0
+              45.4              43.6
+              81.1              15.3
+               4.6              92.2
+              14.8              15.5
+              24.2              33.4
+              48.6              22.5
+               0.0               0.0
+
+--- Resolution 1.1 ---
+ cluster cells                label         second_label delta_next
+       0  9292            Early EPI             Late EPI      0.016
+       1  8640            Early EPI EPI/PrE intermediate      0.036
+       2  6253 EPI/PrE intermediate             Early TE      0.167
+       3  5928            Early EPI             Late EPI      0.051
+       4  5691            Early EPI EPI/PrE intermediate      0.008
+       5  5684            Early EPI             Late EPI      0.027
+       6  5016 EPI/PrE intermediate            Early EPI      0.020
+       7  4761            Mature TE             Early TE      0.083
+       8  4598            Mature TE                  CTB      0.218
+       9  4466            Mature TE             Early TE      0.010
+      10  4312            Early EPI EPI/PrE intermediate      0.059
+      11  3883            Early EPI             Late EPI      0.014
+      12  3744            Mature TE             Early TE      0.003
+      13  3341             Early TE EPI/PrE intermediate      0.041
+      14  3247            Early EPI EPI/PrE intermediate      0.027
+      15  2991                  CTB                  STB      0.095
+      16  2829 EPI/PrE intermediate             Early TE      0.128
+      17  2807 EPI/PrE intermediate            Early EPI      0.020
+      18  2076            Early EPI EPI/PrE intermediate      0.025
+      19  1912            Mature TE                  CTB      0.109
+      20   993            Early EPI EPI/PrE intermediate      0.003
+      21   527            Early PrE EPI/PrE intermediate      0.353
+      22   145 EPI/PrE intermediate            Early EPI      0.004
+      23    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           93.5        0.0              98.6
+           Early EPI           88.4        0.0              98.0
+            Early TE           81.7        0.3               4.6
+           Early EPI           95.8        0.0              98.3
+           Early EPI           84.9        0.1               2.1
+           Early EPI           92.8        0.1               2.3
+           Early EPI           40.2        0.1              95.4
+           Mature TE           54.7        1.1               0.4
+           Mature TE           93.2        0.0               1.7
+            Early TE           54.6        0.0               1.9
+           Early EPI           91.2        0.0               3.6
+           Early EPI           79.8        1.9               3.2
+            Early TE           35.8        1.3               1.7
+            Early TE           59.1        1.1               9.8
+           Early EPI           56.8        0.5               2.9
+                 CTB           39.1        0.0               3.6
+            Early TE           77.2        0.2               4.0
+           Early EPI           42.2        0.9               3.8
+           Early EPI           83.2        0.9              53.6
+           Mature TE           73.2        0.0               1.1
+           Early EPI           78.8        0.6              69.3
+           Early PrE           84.6        0.6              42.7
+              Morula           42.8        0.0              29.0
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.4               0.0
+               1.9               0.1
+              80.6              14.8
+               1.5               0.2
+              67.5              30.4
+              59.3              38.5
+               4.5               0.2
+              10.9              88.7
+              12.9              85.4
+              55.6              42.6
+              61.1              35.3
+              45.4              51.4
+              44.5              53.7
+              58.0              32.2
+              70.8              26.3
+               4.3              92.0
+              79.0              17.0
+              71.0              25.2
+              29.5              16.9
+               2.1              96.8
+              15.1              15.6
+              24.3              33.0
+              48.3              22.8
+               0.0               0.0
+
+--- Resolution 1.2 ---
+ cluster cells                label         second_label delta_next
+       0  9286            Early EPI             Late EPI      0.016
+       1  8342            Early EPI EPI/PrE intermediate      0.036
+       2  6933            Early EPI EPI/PrE intermediate      0.028
+       3  6519            Early EPI EPI/PrE intermediate      0.052
+       4  6358 EPI/PrE intermediate             Early TE      0.159
+       5  6148             Early TE            Mature TE      0.013
+       6  5486 EPI/PrE intermediate            Early EPI      0.021
+       7  4741            Early EPI EPI/PrE intermediate      0.059
+       8  4472 EPI/PrE intermediate            Early EPI      0.023
+       9  4398            Early EPI EPI/PrE intermediate      0.005
+      10  3807            Mature TE             Early TE      0.003
+      11  3722             Early TE            Mature TE      0.043
+      12  3650            Early EPI             Late EPI      0.014
+      13  3496            Mature TE                  CTB      0.062
+      14  3190 EPI/PrE intermediate             Early TE      0.032
+      15  3111            Mature TE                  CTB      0.065
+      16  2647            Mature TE                  CTB      0.058
+      17  2407            Early EPI EPI/PrE intermediate      0.024
+      18  1963             Early TE            Mature TE      0.017
+      19   997            Early EPI EPI/PrE intermediate      0.003
+      20   789                  STB                  CTB      0.476
+      21   531            Early PrE EPI/PrE intermediate      0.352
+      22   143 EPI/PrE intermediate            Early EPI      0.004
+      23    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           93.5        0.0              98.6
+           Early EPI           88.6        0.0              98.0
+           Early EPI           88.4        0.3               2.4
+           Early EPI           95.1        0.0              98.1
+            Early TE           78.5        0.4               3.8
+            Early TE           57.7        0.0               3.1
+           Early EPI           40.8        0.5               3.3
+           Early EPI           91.2        0.0               3.5
+            Early TE           42.5        0.1              96.0
+           Early EPI           92.8        0.0               1.8
+            Early TE           33.5        1.3               1.9
+            Early TE           57.7        1.7               2.5
+           Early EPI           80.5        1.7               3.5
+           Mature TE           90.6        0.0               1.8
+            Early TE           58.2        0.4               2.9
+           Mature TE           69.6        0.0               2.5
+           Mature TE           63.3        0.0               0.9
+           Early EPI           79.4        0.6              55.1
+            Early TE           49.0        1.4              10.3
+           Early EPI           78.6        0.6              69.3
+                 STB           75.2        0.1               6.3
+           Early PrE           84.0        0.8              42.4
+              Morula           43.4        0.0              28.7
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.4               0.0
+               1.9               0.1
+              59.2              38.4
+               1.7               0.2
+              60.6              35.6
+              57.8              39.1
+              74.0              22.7
+              60.7              35.8
+               3.9               0.1
+              66.1              32.1
+              43.4              54.7
+              40.0              57.5
+              47.8              48.7
+              15.2              83.0
+              77.9              19.1
+               6.2              91.3
+               2.5              96.6
+              29.7              15.2
+              46.8              42.8
+              14.9              15.7
+               5.2              88.5
+              24.1              33.5
+              48.3              23.1
+               0.0               0.0
+
+--- Resolution 1.3 ---
+ cluster cells                label         second_label delta_next
+       0  8351            Early EPI             Late EPI      0.016
+       1  7697            Early EPI             Late EPI      0.036
+       2  6626            Early EPI EPI/PrE intermediate      0.052
+       3  5902            Early EPI EPI/PrE intermediate      0.054
+       4  5357            Early EPI EPI/PrE intermediate      0.042
+       5  4864            Mature TE             Early TE      0.024
+       6  4734            Early EPI EPI/PrE intermediate      0.013
+       7  4326            Mature TE                  CTB      0.224
+       8  4259             Early TE            Mature TE      0.050
+       9  4205            Early EPI EPI/PrE intermediate      0.020
+      10  4115 EPI/PrE intermediate             Early TE      0.179
+      11  3701            Early EPI             Late EPI      0.011
+      12  3681            Mature TE             Early TE      0.004
+      13  3523 EPI/PrE intermediate             Early TE      0.195
+      14  3449 EPI/PrE intermediate            Early EPI      0.021
+      15  2436            Early EPI EPI/PrE intermediate      0.026
+      16  2430             Early TE            Mature TE      0.027
+      17  2208             Early TE            Mature TE      0.020
+      18  2179            Mature TE                  CTB      0.124
+      19  1853            Mature TE             Early TE      0.067
+      20  1831 EPI/PrE intermediate            Early EPI      0.026
+      21  1743                  STB                  CTB      0.240
+      22  1299                  CTB            Mature TE      0.056
+      23   996            Early EPI EPI/PrE intermediate      0.003
+      24   846            Early EPI EPI/PrE intermediate      0.019
+      25   525            Early PrE EPI/PrE intermediate      0.355
+      26    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           94.4        0.0              98.7
+           Early EPI           92.3        0.0              97.8
+           Early EPI           95.3        0.0              98.1
+           Early EPI           91.6        0.0               3.0
+           Early EPI           86.1        0.4               2.4
+            Early TE           53.0        0.2               2.2
+           Early EPI           92.3        0.0               1.9
+           Mature TE           93.0        0.0               2.1
+            Early TE           74.9        0.1               3.4
+           Early EPI           51.6        0.0              96.0
+            Early TE           66.9        0.6               7.1
+           Early EPI           86.6        0.6               1.6
+            Early TE           36.0        1.2               1.7
+            Early TE           69.2        0.3               3.5
+           Early EPI           45.7        0.8               3.7
+           Early EPI           75.3        1.0              49.5
+            Early TE           61.8        1.9               2.1
+            Early TE           50.5        1.0              11.4
+           Mature TE           75.1        0.0               1.1
+           Mature TE           61.0        0.1               0.5
+            Early TE           49.4        0.1              95.2
+                 STB           41.7        0.1               2.5
+                 CTB           57.7        0.0               4.3
+           Early EPI           79.4        0.6              69.2
+           Early EPI           46.2        6.0              15.6
+           Early PrE           85.0        0.6              42.1
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.3               0.0
+               2.1               0.2
+               1.7               0.2
+              58.8              38.1
+              61.6              36.0
+              33.1              64.7
+              66.9              31.2
+              13.2              84.7
+              87.2               9.4
+               3.9               0.1
+              74.4              18.4
+              52.3              46.1
+              43.8              54.5
+              78.6              17.9
+              70.9              25.5
+              34.7              15.7
+              39.6              58.3
+              44.0              44.6
+               2.2              96.7
+              15.8              83.7
+               4.6               0.1
+               4.6              92.9
+               4.1              91.6
+              15.2              15.7
+              33.7              50.7
+              24.4              33.5
+               0.0               0.0
+
+--- Resolution 1.4 ---
+ cluster cells                label         second_label delta_next
+       0  6180            Early EPI             Late EPI      0.052
+       1  6105            Early EPI EPI/PrE intermediate      0.031
+       2  5919            Early EPI             Late EPI      0.051
+       3  5784            Early EPI             Late EPI      0.056
+       4  5300            Early EPI EPI/PrE intermediate      0.008
+       5  5235 EPI/PrE intermediate            Early EPI      0.018
+       6  5044            Mature TE             Early TE      0.104
+       7  4798            Early EPI             Late EPI      0.017
+       8  3728 EPI/PrE intermediate            Early EPI      0.013
+       9  3697             Early TE            Mature TE      0.050
+      10  3621            Mature TE             Early TE      0.004
+      11  3612 EPI/PrE intermediate             Early TE      0.179
+      12  3347            Early EPI EPI/PrE intermediate      0.059
+      13  3196            Early EPI EPI/PrE intermediate      0.016
+      14  3194            Early EPI             Late EPI      0.025
+      15  3059            Early EPI             Late EPI      0.031
+      16  3058 EPI/PrE intermediate             Early TE      0.128
+      17  2864             Early TE            Mature TE      0.033
+      18  2486            Mature TE                  CTB      0.025
+      19  2318            Mature TE             Early TE      0.055
+      20  2286            Mature TE             Early TE      0.080
+      21  2150            Mature TE                  CTB      0.119
+      22  2064            Mature TE             Early TE      0.018
+      23  1629                  STB                  CTB      0.271
+      24  1047            Early EPI EPI/PrE intermediate      0.002
+      25   882            Early EPI EPI/PrE intermediate      0.022
+      26   533            Early PrE EPI/PrE intermediate      0.352
+      27    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           95.2        0.0              98.2
+           Early EPI           76.1        0.4               2.0
+           Early EPI           94.4        0.0              98.7
+           Early EPI           93.8        0.0              98.2
+           Early EPI           85.9        0.1               1.9
+           Early EPI           41.7        0.1              95.3
+           Mature TE           63.4        0.0               2.1
+           Early EPI           84.9        0.5               2.1
+           Early EPI           44.1        0.7              44.7
+            Early TE           78.3        0.1               3.2
+            Early TE           36.7        1.2               1.6
+            Early TE           78.5        0.7               3.5
+           Early EPI           91.3        0.0               3.4
+           Early EPI           92.4        0.0               3.9
+           Early EPI           86.7        0.5              69.3
+           Early EPI           93.5        0.0              98.2
+            Early TE           78.4        0.2               4.0
+            Early TE           64.9        1.5               2.6
+           Mature TE           62.8        0.0               3.4
+           Mature TE           88.5        0.0               2.2
+           Mature TE           56.3        0.3               0.1
+           Mature TE           76.0        0.0               0.8
+            Early TE           44.7        1.3              10.6
+                 STB           44.5        0.1               2.5
+           Early EPI           79.4        0.6              70.5
+           Early EPI           43.0        6.8              14.7
+           Early PrE           83.7        0.8              42.2
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.6               0.2
+              64.2              33.8
+               1.3               0.0
+               1.8               0.1
+              67.7              30.4
+               4.5               0.1
+              30.2              67.7
+              58.2              39.7
+              40.5              14.8
+              88.4               8.3
+              43.8              54.6
+              76.0              20.5
+              57.7              38.9
+              59.7              36.4
+              19.7              11.0
+               1.8               0.0
+              80.0              16.0
+              43.9              53.5
+               5.7              90.9
+              16.1              81.8
+              14.4              85.5
+               1.9              97.3
+              44.3              45.1
+               4.4              93.1
+              14.3              15.2
+              32.9              52.4
+              24.2              33.6
+               0.0               0.0
+
+--- Resolution 1.5 ---
+ cluster cells                label         second_label delta_next
+       0  8476            Early EPI             Late EPI      0.015
+       1  6535            Early EPI EPI/PrE intermediate      0.052
+       2  6132            Early EPI             Late EPI      0.054
+       3  5816 EPI/PrE intermediate             Early TE      0.179
+       4  5031            Early EPI EPI/PrE intermediate      0.037
+       5  5003 EPI/PrE intermediate            Early EPI      0.018
+       6  4975            Early EPI EPI/PrE intermediate      0.052
+       7  4714            Early EPI EPI/PrE intermediate      0.013
+       8  4580            Early EPI             Late EPI      0.029
+       9  4031            Mature TE             Early TE      0.153
+      10  3667            Mature TE             Early TE      0.004
+      11  3360            Early EPI EPI/PrE intermediate      0.024
+      12  3310 EPI/PrE intermediate             Early TE      0.163
+      13  3219            Mature TE                  CTB      0.244
+      14  3215             Early TE            Mature TE      0.035
+      15  3106            Early EPI             Late EPI      0.024
+      16  2789 EPI/PrE intermediate             Early TE      0.206
+      17  2169            Mature TE             Early TE      0.061
+      18  2041                  CTB            Mature TE      0.010
+      19  2033            Mature TE                  CTB      0.121
+      20  1982            Mature TE             Early TE      0.045
+      21  1729            Early EPI EPI/PrE intermediate      0.033
+      22  1599                  STB                  CTB      0.276
+      23  1110            Early EPI EPI/PrE intermediate      0.040
+      24  1096            Early EPI EPI/PrE intermediate      0.003
+      25   886            Early EPI EPI/PrE intermediate      0.022
+      26   532            Early PrE EPI/PrE intermediate      0.352
+      27    49            Early EPI EPI/PrE intermediate      0.051
+ majority_cell_label majority_share pct_pruned pct_24h-blastoids
+           Early EPI           94.2        0.0              98.6
+           Early EPI           94.5        0.0              98.1
+           Early EPI           93.9        0.0              98.2
+            Early TE           83.6        0.6               4.0
+           Early EPI           85.2        0.4               2.0
+           Early EPI           41.9        0.1              95.9
+           Early EPI           93.0        0.0               3.2
+           Early EPI           92.2        0.0               1.9
+           Early EPI           88.0        0.5               2.2
+           Mature TE           75.0        0.0               1.6
+            Early TE           36.5        1.3               1.6
+           Early EPI           51.2        0.4               3.7
+            Early TE           82.6        0.0               6.0
+           Mature TE           89.8        0.0               1.3
+            Early TE           67.2        1.7               2.6
+           Early EPI           84.9        0.5              64.3
+            Early TE           61.6        0.4               2.9
+            Early TE           42.8        1.2              10.0
+           Mature TE           56.2        0.0               3.8
+           Mature TE           76.4        0.0               0.9
+           Mature TE           50.7        0.4               0.1
+           Early EPI           63.6        0.2              96.5
+                 STB           45.3        0.1               2.6
+           Early EPI           57.2        0.1               3.7
+           Early EPI           80.3        0.5              71.6
+           Early EPI           43.3        6.4              15.6
+           Early PrE           83.8        0.8              42.3
+           Early EPI           83.7        0.0             100.0
+ pct_48h-blastoids pct_72h-blastoids
+               1.4               0.0
+               1.7               0.2
+               1.7               0.1
+              75.4              20.6
+              61.8              36.2
+               4.0               0.1
+              55.6              41.3
+              66.5              31.5
+              55.7              42.1
+              23.5              74.9
+              44.2              54.2
+              71.9              24.4
+              85.7               8.4
+              11.0              87.7
+              46.2              51.3
+              24.0              11.7
+              76.6              20.4
+              42.1              47.9
+               5.1              91.0
+               1.8              97.2
+              22.4              77.5
+               3.5               0.0
+               4.4              93.0
+              80.8              15.5
+              13.9              14.5
+              32.5              51.9
+              24.2              33.5
+               0.0               0.0

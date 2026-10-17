@@ -1,0 +1,56 @@
+==================================================
+SEURAT OBJECT LAYER METADATA & STATISTICS
+Generated on: 2026-10-17 20:36:47.809311 
+==================================================
+
+Object class: Seurat 
+Seurat object version: 5.0.2 
+
+Assays present in object: RNA 
+
+----------------------------------------
+Assay Name: RNA 
+Assay class: Assay5 
+----------------------------------------
+Feature-level metadata columns: (none) 
+
+Layers found: counts.24h-blastoids_cellbender, counts.48h-blastoids_cellbender, counts.72h-blastoids_cellbender 
+
+  ▶ Layer: counts.24h-blastoids_cellbender 
+    - Class              : dgCMatrix 
+    - Features (Genes)   : 37143 
+    - Cells (Barcodes)   : 38972 
+    - Sparsity (Zeros)   : 87.30% 
+
+  ▶ Layer: counts.48h-blastoids_cellbender 
+    - Class              : dgCMatrix 
+    - Features (Genes)   : 37143 
+    - Cells (Barcodes)   : 34374 
+    - Sparsity (Zeros)   : 86.70% 
+
+  ▶ Layer: counts.72h-blastoids_cellbender 
+    - Class              : dgCMatrix 
+    - Features (Genes)   : 37143 
+    - Cells (Barcodes)   : 31412 
+    - Sparsity (Zeros)   : 87.88% 
+
+----------------------------------------
+Global Metadata Column Summaries
+----------------------------------------
+Cell-level metadata columns ( 8 ):
+  - orig.ident
+  - nCount_RNA
+  - nFeature_RNA
+  - Sample
+  - log1p_total_counts
+  - pct_counts_mt
+  - pct_counts_ribo
+  - pct_counts_hb 
+
+Total Cells in Master Object: 104758 
+Total Genes in Master Object: 37143 
+
+Cell Count Breakdown Per Sample Group:
+  - 24h-blastoids_cellbender : 38972 cells
+  - 48h-blastoids_cellbender : 34374 cells
+  - 72h-blastoids_cellbender : 31412 cells

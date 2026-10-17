@@ -1,0 +1,79 @@
+"level","call","sample","Freq","pct"
+"label","Cleavage","24h-blastoids",0,0
+"label","Morula","24h-blastoids",23,0.07
+"label","Prelineage","24h-blastoids",114,0.35
+"label","ICM","24h-blastoids",1452,4.51
+"label","EPI/PrE intermediate","24h-blastoids",1178,3.66
+"label","Early EPI","24h-blastoids",25824,80.24
+"label","Late EPI","24h-blastoids",50,0.16
+"label","Early PrE","24h-blastoids",199,0.62
+"label","Late PrE","24h-blastoids",0,0
+"label","Early TE","24h-blastoids",3056,9.5
+"label","Mature TE","24h-blastoids",164,0.51
+"label","CTB","24h-blastoids",79,0.25
+"label","STB","24h-blastoids",32,0.1
+"label","EVT","24h-blastoids",1,0
+"label","ExE mesoderm","24h-blastoids",0,0
+"label","Amnion","24h-blastoids",0,0
+"label","Pruned","24h-blastoids",11,0.03
+"label","Cleavage","48h-blastoids",0,0
+"label","Morula","48h-blastoids",34,0.11
+"label","Prelineage","48h-blastoids",257,0.8
+"label","ICM","48h-blastoids",1360,4.24
+"label","EPI/PrE intermediate","48h-blastoids",1898,5.91
+"label","Early EPI","48h-blastoids",14097,43.9
+"label","Late EPI","48h-blastoids",38,0.12
+"label","Early PrE","48h-blastoids",120,0.37
+"label","Late PrE","48h-blastoids",0,0
+"label","Early TE","48h-blastoids",12186,37.95
+"label","Mature TE","48h-blastoids",1940,6.04
+"label","CTB","48h-blastoids",100,0.31
+"label","STB","48h-blastoids",38,0.12
+"label","EVT","48h-blastoids",0,0
+"label","ExE mesoderm","48h-blastoids",0,0
+"label","Amnion","48h-blastoids",0,0
+"label","Pruned","48h-blastoids",44,0.14
+"label","Cleavage","72h-blastoids",0,0
+"label","Morula","72h-blastoids",10,0.03
+"label","Prelineage","72h-blastoids",60,0.21
+"label","ICM","72h-blastoids",794,2.75
+"label","EPI/PrE intermediate","72h-blastoids",932,3.23
+"label","Early EPI","72h-blastoids",7749,26.82
+"label","Late EPI","72h-blastoids",55,0.19
+"label","Early PrE","72h-blastoids",139,0.48
+"label","Late PrE","72h-blastoids",1,0
+"label","Early TE","72h-blastoids",4231,14.65
+"label","Mature TE","72h-blastoids",11844,41
+"label","CTB","72h-blastoids",2125,7.36
+"label","STB","72h-blastoids",672,2.33
+"label","EVT","72h-blastoids",1,0
+"label","ExE mesoderm","72h-blastoids",0,0
+"label","Amnion","72h-blastoids",0,0
+"label","Pruned","72h-blastoids",277,0.96
+"lineage","Pre-lineage","24h-blastoids",137,0.43
+"lineage","ICM","24h-blastoids",2630,8.17
+"lineage","Epiblast","24h-blastoids",25874,80.4
+"lineage","Primitive endoderm","24h-blastoids",199,0.62
+"lineage","Trophectoderm","24h-blastoids",3220,10.01
+"lineage","Post-implantation trophoblast","24h-blastoids",112,0.35
+"lineage","Extraembryonic mesoderm","24h-blastoids",0,0
+"lineage","Amnion","24h-blastoids",0,0
+"lineage","Pruned","24h-blastoids",11,0.03
+"lineage","Pre-lineage","48h-blastoids",291,0.91
+"lineage","ICM","48h-blastoids",3258,10.15
+"lineage","Epiblast","48h-blastoids",14135,44.02
+"lineage","Primitive endoderm","48h-blastoids",120,0.37
+"lineage","Trophectoderm","48h-blastoids",14126,43.99
+"lineage","Post-implantation trophoblast","48h-blastoids",138,0.43
+"lineage","Extraembryonic mesoderm","48h-blastoids",0,0
+"lineage","Amnion","48h-blastoids",0,0
+"lineage","Pruned","48h-blastoids",44,0.14
+"lineage","Pre-lineage","72h-blastoids",70,0.24
+"lineage","ICM","72h-blastoids",1726,5.97
+"lineage","Epiblast","72h-blastoids",7804,27.01
+"lineage","Primitive endoderm","72h-blastoids",140,0.48
+"lineage","Trophectoderm","72h-blastoids",16075,55.64
+"lineage","Post-implantation trophoblast","72h-blastoids",2798,9.69
+"lineage","Extraembryonic mesoderm","72h-blastoids",0,0
+"lineage","Amnion","72h-blastoids",0,0
+"lineage","Pruned","72h-blastoids",277,0.96

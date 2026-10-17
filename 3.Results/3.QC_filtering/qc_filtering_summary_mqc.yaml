@@ -1,0 +1,39 @@
+id: 'qc_filtering_summary'
+section_name: 'QC Filtering Summary'
+description: 'Per-sample QC filtering results with MAD-based thresholds'
+plot_type: 'table'
+pconfig:
+  id: 'qc_filtering_table'
+  title: 'QC Filtering Results'
+
+headers:
+  Cells_Before:
+    title: 'Cells Before'
+    description: 'Number of cells before QC filtering'
+    format: '{:,.0f}'
+  Cells_After:
+    title: 'Cells After'
+    description: 'Number of cells after QC filtering'
+    format: '{:,.0f}'
+  Pct_Retained:
+    title: '% Retained'
+    description: 'Percentage of cells retained after filtering'
+    suffix: '%'
+    format: '{:,.1f}'
+    scale: 'RdYlGn'
+    min: 50
+    max: 100
+
+data:
+  24h-blastoids:
+    Cells_Before: 38972
+    Cells_After: 32183
+    Pct_Retained: 82.6
+  48h-blastoids:
+    Cells_Before: 34374
+    Cells_After: 32112
+    Pct_Retained: 93.4
+  72h-blastoids:
+    Cells_Before: 31412
+    Cells_After: 28890
+    Pct_Retained: 92

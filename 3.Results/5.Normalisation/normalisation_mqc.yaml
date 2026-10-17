@@ -1,0 +1,12 @@
+id: 'normalisation_stats'
+section_name: 'Normalisation Statistics'
+description: 'Log normalisation statistics'
+plot_type: 'generalstats'
+
+data:
+  Normalisation:
+    Method: 'LogNormalize'
+    Samples: 3
+    Total_Cells: 93185
+    Total_Genes: 37143
+    Variable_Features: 3000
