@@ -1,4 +1,4 @@
-# sc-Blastoids
+# Single-cell transcriptomics analysis of naive hPSC derived blastoids
 
 Single-cell RNA-seq analysis of human blastoids (stem cell-derived models of the blastocyst) at three time points:
 24 h, 48 h and 72 h. The samples were profiled with 10x Genomics Flex (probe-based fixed RNA profiling) and pooled in a
