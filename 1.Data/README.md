@@ -1,9 +1,28 @@
 # Data is downloaded here
 
-Input data for 2.Scripts/run_pipeline.sh (not tracked by git):
+The input data are not tracked by git; they are shared on request as a Google Drive folder with these files:
 
-- `<Sample>-raw_feature_bc_matrix/`: raw 10X matrix per sample (`barcodes.tsv.gz`, `features.tsv.gz`, `matrix.mtx.gz`),
-  for 24h-blastoids, 48h-blastoids and 72h-blastoids
-- `references/zhao2024_human_embryo/`: Zhao et al. 2024 human embryo reference (Nat Methods, doi 10.1038/s41592-024-02493-2)
-  - `psd.R3.6.em.seurat.ob.rds`: integrated reference Seurat object, used by Annotation_SingleR.R
-  - `zhao2024_celltype_markers_top25.csv`: top 25 markers per cell type (Supplementary Data 3), used by Slingshot.R
+| File | Contents | Used by |
+|---|---|---|
+| `24h-blastoids-raw_feature_bc_matrix.zip` | raw 10X matrix, 24h blastoids | `cellbender.sh` |
+| `48h-blastoids-raw_feature_bc_matrix.zip` | raw 10X matrix, 48h blastoids | `cellbender.sh` |
+| `72h-blastoids-raw_feature_bc_matrix.zip` | raw 10X matrix, 72h blastoids | `cellbender.sh` |
+| `zhao2024_reference.zip` | Zhao et al. 2024 human embryo reference (Nat Methods, doi 10.1038/s41592-024-02493-2): `psd.R3.6.em.seurat.ob.rds` and the top 25 markers per cell type, `zhao2024_celltype_markers_top25.csv` (Supplementary Data 3) | `Annotation_SingleR.R`, `Slingshot.R` |
+| `md5sums.txt` | checksums of the zip files | |
+
+Check the downloads and unzip them here, in `1.Data/`:
+
+```
+md5sum -c md5sums.txt        # macOS: md5 *.zip, and compare with md5sums.txt
+unzip '*.zip'
+```
+
+This gives the layout the scripts expect:
+
+```
+1.Data/
+  24h-blastoids-raw_feature_bc_matrix/   barcodes.tsv.gz, features.tsv.gz, matrix.mtx.gz
+  48h-blastoids-raw_feature_bc_matrix/
+  72h-blastoids-raw_feature_bc_matrix/
+  references/zhao2024_human_embryo/      psd.R3.6.em.seurat.ob.rds, zhao2024_celltype_markers_top25.csv
+```
